@@ -13,7 +13,7 @@ require '../utilities/tools.php';
     $(document).ready(function() {
         //Get all of the rows
         $.getJSON("../api/analytics/getBrews.php", function(data) {
-            $("#showAllLoading").fadeOut("slow", function() {
+            $("#showAllLoading").fadeOut("fast", function() {
                 for(var i = 0, len = data.result.length; i < len; i++) {
                     $("#getAllTable").append("<tr data-brewId='" + data.result[i].brewId + "'><td>" +
                                              data.result[i].beerName +
