@@ -3,28 +3,28 @@
 require '../init.php';
 require '../tools.php';
 
-$data = Database::runQuery("SELECT value, dateTime, typeId FROM fermentation WHERE brewId = :brewId ORDER BY typeId, dateTime", array('brewId' => $_GET['brewId']));
-
-$return['ph'][0] = array(
-  label => "PH",
-  strokeColor => "#F16220",
-  pointColor => "#F16220", 
-  pointStrokeColor => " #fff"
-);
-
-$return['gravity'][0] = array (
-      label => "Gravity",
-      strokeColor => "#F16220",
-      pointColor => "#F16220", 
-      pointStrokeColor => " #fff"
-);
+$data = Database::runQuery(
+  "SELECT 
+    f.value, 
+    f.dateTime, 
+    f.typeId,
+    brew.brewStart,
+    DATEDIFF(brew.brewEnd, brew.brewStart) AS brewLength
+  FROM fermentation AS f
+  LEFT OUTER JOIN brew AS brew ON f.brewId = brew.id
+  WHERE brewId = :brewId
+  ORDER BY f.typeId, f.dateTime"
+  , array('brewId' => $_GET['brewId']));
 
 foreach($data as $datapoint) {
   if($datapoint["typeId"] == 1) {
-    $return["ph"][0]['data'][] = array("x" => $datapoint['dateTime'], "y" => $datapoint['value']);
+    $return["ph"][] = array("x" => $datapoint['dateTime'], "y" => $datapoint['value']);
   } elseif($datapoint['typeId'] == 11) {
-    $return['gravity'][0]['data'][] = array("x" => $datapoint['dateTime'], "y" => $datapoint['value']);
+    $return['gravity'][] = array("x" => $datapoint['dateTime'], "y" => $datapoint['value']);
   }
 }
+
+$return['brewLength'] = $data[0]['brewLength'];
+$return['brewStart'] = $data[0]['brewStart'];
 
 echo json_encode($return);
