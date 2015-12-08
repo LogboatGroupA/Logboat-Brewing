@@ -28,7 +28,7 @@ if(!isLoggedIn()) {
                     $("#updateModal .modal-body").html("<div style='text-align: center;'><i class='fa fa-beer fa-spin fa-5x text-center'></i></div>");
                     $("#updateModal").modal("toggle");
                     $.get("updateModal.php", {"brewId": calEvent.id}, function(data) {
-                        $("#updateModal .modal-body div").fadeOut("fast", function() {
+                        $("#updateModal .modal-body div").fadeOut(400, function() {
                             $("#updateModal .modal-body").hide().html(data).slideDown("slow");
                             
                             //Datepicker Options
@@ -92,7 +92,7 @@ if(!isLoggedIn()) {
                     $("#createModal .modal-body").html("<div style='text-align: center;'><i class='fa fa-beer fa-spin fa-5x text-center'></i></div>");
                     $("#createModal").modal("toggle");
                     $.get("createModal.php", function(data) {
-                        $("#createModal .modal-body div").fadeOut("fast", function() {
+                        $("#createModal .modal-body div").fadeOut(400, function() {
                             $("#createModal .modal-body").hide().html(data).slideDown("slow");
                             
                             //Datepicker Options (Lots!)

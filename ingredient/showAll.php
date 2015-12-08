@@ -16,7 +16,7 @@ if(!isLoggedIn()) {
             $(document).ready(function() {
                 //Get all of the rows
                 $.getJSON("../api/ingredient/getAll.php", function(data) {
-                    $("#showAllLoading").fadeOut("fast", function() {
+                    $("#showAllLoading").fadeOut(400, function() {
                         for(var i = 0, len = data.result.length; i < len; i++) {
                             if (parseFloat(data.result[i].quantity) <= parseFloat(data.result[i].lowValue))
                             {
@@ -55,7 +55,7 @@ if(!isLoggedIn()) {
                                 $("#updateModal .modal-body").html("<div style='text-align: center;'><i class='fa fa-beer fa-spin fa-5x text-center'></i></div>");
                                 $("#updateModal").modal('toggle');
                                 $.get("updateModal.php", {"ingredientId": $(this).attr("data-ingredientId")}, function(data) {
-                                    $("#updateModal .modal-body div").fadeOut("fast", function() {
+                                    $("#updateModal .modal-body div").fadeOut(400, function() {
                                         $("#updateModal .modal-body").hide().html(data).slideDown("slow");
                                     });
                                 });
@@ -72,7 +72,7 @@ if(!isLoggedIn()) {
                     $("#createModal .modal-body").html("<div style='text-align: center;'><i class='fa fa-beer fa-spin fa-5x text-center'></i></div>");
                     $("#createModal").modal('toggle');
                     $.get("createModal.php", function(data) {
-                        $("#createModal .modal-body div").fadeOut("fast", function() {
+                        $("#createModal .modal-body div").fadeOut(400, function() {
                             $("#createModal .modal-body").hide().html(data).slideDown("slow");
                         });
                     });
