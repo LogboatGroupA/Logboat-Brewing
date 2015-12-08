@@ -3,19 +3,31 @@
 require '../init.php';
 require '../tools.php';
 
+//Should really just make a Database non-static object option....
+$conn = Database::getConn();
+
 $data = Database::runQuery(
   "SELECT 
-    f.value, 
-    f.dateTime, 
-    f.typeId,
-    brew.brewStart,
-    DATEDIFF(brew.brewEnd, brew.brewStart) AS brewLength
-  FROM fermentation AS f
-  LEFT OUTER JOIN brew AS brew ON f.brewId = brew.id
+    value, 
+    dateTime, 
+    typeId
+  FROM fermentation
   WHERE brewId = :brewId
-  ORDER BY f.typeId, f.dateTime"
-  , array('brewId' => $_GET['brewId']));
+  ORDER BY typeId, dateTime"
+  , array('brewId' => (int) $_GET['brewId']), $conn);
+  
+if(count($data) == 0){
+  fail("No Data To Display");
+}
+  
+$brewDates = Database::runQuery("SELECT brewEnd, brewStart FROM brew WHERE id = :brewId", array("brewId" => (int) $_GET['brewId']), $conn);
+$brewDates = $brewDates[0]; // Select the only one that should show
 
+//Set min x-axis to first day of brew
+// $return["ph"][] = array("x" => $brewDates['brewStart']);
+// $return['gravity'][] = array("x" => $brewDates['brewStart'], "y" => null);
+
+//Set datapoints for graph
 foreach($data as $datapoint) {
   if($datapoint["typeId"] == 1) {
     $return["ph"][] = array("x" => $datapoint['dateTime'], "y" => $datapoint['value']);
@@ -24,7 +36,8 @@ foreach($data as $datapoint) {
   }
 }
 
-$return['brewLength'] = $data[0]['brewLength'];
-$return['brewStart'] = $data[0]['brewStart'];
+//Set max x-axis to last day of brew
+$return["ph"][] = array("x" => $brewDates['brewEnd']);
+$return['gravity'][] = array("x" => $brewDates['brewEnd']);
 
-echo json_encode($return);
+success($return);

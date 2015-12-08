@@ -43,67 +43,86 @@ if(!isLoggedIn()) {
         </div>
         <button type="button" class="btn btn-primary">Submit</button>
       </form>
-      
-      <br>
 
       <div id="chartContainer">
         <div class="col-md-6">
+          <h2 style="text-align: center;">pH</h2>
           <canvas id="chart1"></canvas>
         </div>
         <div class="col-md-6">
+          <h2 style="text-align: center;">Gravity</h2>
           <canvas id="chart2"></canvas>
         </div>
         <script type="text/javascript"> 
           $.get("<?= getBaseUrl(); ?>api/analytics/chartData.php", {"brewId" : <?= (int) $_GET['brewId'] ?>}, function(jsonData) {
             
-            var ctx1 = document.getElementById("chart1").getContext("2d");
-            var ctx2 = document.getElementById("chart2").getContext("2d");
-            
-            //Convert MySQL date strings to JS Date for PH
-            var phData = jsonData.ph;
-            for(var i = 0, len = phData.length; i < len; i++) {
-              phData[i].x = new Date(phData[i].x);
-            }
-            
-            //Convert MySQL date strings to JS Date for Gravity
-            var gravityData = jsonData.gravity;
-            for(var i = 0, len = gravityData.length; i < len; i++) {
-              gravityData[i].x = new Date(gravityData[i].x);
-            }
-            
-            //Chart Options (For Scale and String Formatting)
-            chartOptions = {
-              // Set Date Options
-              scaleType: "date",
-              scaleDateFormat: "mmmm d",
-              scaleTimeFormat: "h:MM",
-              scaleDateTimeFormat:"mmm d, yyyy, hh:MM",
+            if(jsonData.hasOwnProperty('success') && jsonData.success == true) {
+              var ctx1 = document.getElementById("chart1").getContext("2d");
+              var ctx2 = document.getElementById("chart2").getContext("2d");
               
-              // Set margins on Chart by Brew Length
-              scaleOverride: true,
-              // scaleSteps: jsonData.brewLength * 24 * 60 * 60,
-              //scaleStartValue: new Date(jsonData.brewStart)
+              //Convert MySQL date strings to JS Date for PH
+              var phData = jsonData.result.ph;
+              for(var i = 0, len = phData.length; i < len; i++) {
+                phData[i].x = new Date(phData[i].x);
+              }
+              
+              //Convert MySQL date strings to JS Date for Gravity
+              var gravityData = jsonData.result.gravity;
+              for(var i = 0, len = gravityData.length; i < len; i++) {
+                gravityData[i].x = new Date(gravityData[i].x);
+              }
+              
+              console.dir(phData);
+              
+              //Chart Options (For Scale and String Formatting)
+              phChartOptions = {
+                scaleType: "date",
+                scaleDateFormat: "mmmm d",
+                scaleTimeFormat: "H:MM",
+                scaleDateTimeFormat:"mmm d, yyyy, hh:MM",
+                bezierCurve: false,
+                
+                scaleOverride: true,
+                scaleSteps: 7,
+                scaleStepWidth: 2,
+                scaleStartValue: 0
+              }
+              
+              gravityChartOptions = {
+                scaleType: "date",
+                scaleDateFormat: "mmmm d",
+                scaleTimeFormat: "H:MM",
+                scaleDateTimeFormat:"mmm d, yyyy, hh:MM",
+                bezierCurve: false
+              }
+              
+              var chartObj1 = new Chart(ctx1).Scatter([
+                {
+                  label: 'pH',
+                  strokeColor: '#337AB7',
+                  pointColor: '#285F8F',
+                  pointStrokeColor: '#fff',
+                  datasetFill: true,
+                  data: phData
+                }
+              ], phChartOptions);
+              
+              var chartObj2 = new Chart(ctx2).Scatter([
+                {
+                  label: 'Gravity',
+                  strokeColor: '#337AB7',
+                  pointColor: '#285F8F',
+                  pointStrokeColor: '#fff',
+                  data: gravityData
+                }
+              ], gravityChartOptions);
+            } else {
+              document.getElementById("chartContainer").innerHTML = "<h1 style='text-align: center'>No Data To Graph</h1>";
             }
-            
-            var chartObj1 = new Chart(ctx1).Scatter([
-              {
-                label: 'pH',
-                strokeColor: '#F16220',
-                pointColor: '#F16220',
-                pointStrokeColor: '#fff',
-                data: phData
-              }
-            ], chartOptions);
-            var chartObj2 = new Chart(ctx2).Scatter([
-              {
-                label: 'Gravity',
-                strokeColor: '#F16220',
-                pointColor: '#F16220',
-                pointStrokeColor: '#fff',
-                data: gravityData
-              }
-            ], chartOptions);
           });
+          
+            
+          
         </script>
       </div>
 
