@@ -18,7 +18,7 @@ if(!isLoggedIn()) {
                 $.getJSON("../api/ingredient/getAll.php", function(data) {
                     $("#showAllLoading").fadeOut("slow", function() {
                         for(var i = 0, len = data.result.length; i < len; i++) {
-                            if (data.result[i].quantity <= data.result[i].lowValue)
+                            if (parseFloat(data.result[i].quantity) <= parseFloat(data.result[i].lowValue))
                             {
                                 $("#getAllTable").append("<tr class='danger' data-ingredientId='" + data.result[i].id + "'><td>" +
                                                      data.result[i].name +
