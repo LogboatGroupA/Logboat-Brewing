@@ -31,15 +31,45 @@ $user = $data[0]; // Grab the first result (should only be one)
                     data.result.forEach(function (brew) {
                         var brewCell = $("<div></div>");
                         brewCell.addClass("cell-basic clearfix");
-
+                        
                         /**
-                         * Beer name
+                         * Brew number and name
                          */
-                        var name = $("<h3>" + brew.beerName + "</h3>");
-                        name.addClass("inline no-spacing");
+                        var leftDiv = $("<div></div>");
+                        leftDiv.addClass("inline");
+                        
+                        var brewLink = "<?= getBaseUrl(); ?>analytics/showAnalytics.php?brewId=" + brew.id;
+                        
+                        var id = $("<h3><a href=" + brewLink + ">Brew #" + brew.id + "</a></h3>");
+                        id.addClass("inline-block no-spacing");
+                        
+                        var name = $("<h4>" + brew.beerName + "</h4>");
+                        name.addClass("inline-block sub-header dark-gray");
 
-                        brewCell.append(name);
-
+                        leftDiv.append(id);
+                        leftDiv.append("<br>");
+                        leftDiv.append(name);
+                        
+                        brewCell.append(leftDiv);
+                        
+                        /**
+                         * Brew dates
+                         */
+                        var rightDiv = $("<div></div>");
+                        rightDiv.addClass("inline right");
+                        
+                        var brewStart = $("<h5>Start: " + new Date(Date.parse(brew.brewStart)).toDateString() + "</h5>");
+                        brewStart.addClass("inline-block no-spacing medium-gray");
+                        
+                        var brewEnd = $("<h5>End: " + new Date(Date.parse(brew.brewEnd)).toDateString() + "</h5>");
+                        brewEnd.addClass("inline-block no-spacing medium-gray");
+                        
+                        rightDiv.append(brewStart);
+                        rightDiv.append("<br><br>");
+                        rightDiv.append(brewEnd);
+                        
+                        brewCell.append(rightDiv);
+                        
                         brewList.append(brewCell);
                     });
                 });

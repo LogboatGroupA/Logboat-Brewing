@@ -33,13 +33,14 @@
                     
                     var name = $("<h3><a href='user.php?id=" + user.id + "'>"
                             + user.username + "</a></h3>");
-                    name.addClass("inline no-spacing");
+                    name.addClass("inline-block no-spacing");
                     
                     var createdDate = $("<h5></h5>");
                     var activeSinceText = "Active since " + 
                             new Date(Date.parse(user.created)).toDateString();
+                    
                     createdDate.text(activeSinceText);
-                    createdDate.addClass("inline");
+                    createdDate.addClass("inline-block sub-header");
                     
                     leftDiv.append(name);
                     leftDiv.append("<br>");

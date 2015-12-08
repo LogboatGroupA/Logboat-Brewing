@@ -10,9 +10,9 @@ if(!isLoggedIn()) {
 $userId = htmlspecialchars($_GET['userId']);
 
 $query = 
-    "SELECT brew.id, 
-            brewStart, 
-            brewEnd, 
+    "SELECT brew.id,
+            brewStart,
+            brewEnd,
             beerId,
             beer.name AS beerName
     FROM
