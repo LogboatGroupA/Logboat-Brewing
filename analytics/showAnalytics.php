@@ -46,7 +46,8 @@ if(!isLoggedIn()) {
           <canvas id="chart2"></canvas>
         </div>
         <script type="text/javascript"> 
-          $.get("../api/analytics/chartData.php", {"brewId" : <?= (int) $_GET['brewId'] ?>}, function(jsonData) {
+          $.get("<?= getBaseUrl(); ?>api/analytics/chartData.php", {"brewId" : <?= (int) $_GET['brewId'] ?>}, function(jsonData) {
+            
             var ctx1 = document.getElementById("chart1").getContext("2d");
             var data = [
                           {
