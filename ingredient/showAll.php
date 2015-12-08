@@ -18,7 +18,9 @@ if(!isLoggedIn()) {
                 $.getJSON("../api/ingredient/getAll.php", function(data) {
                     $("#showAllLoading").fadeOut("slow", function() {
                         for(var i = 0, len = data.result.length; i < len; i++) {
-                            $("#getAllTable").append("<tr data-ingredientId='" + data.result[i].id + "'><td>" +
+                            if (data.result[i].quantity <= data.result[i].lowValue)
+                            {
+                                $("#getAllTable").append("<tr class='danger' data-ingredientId='" + data.result[i].id + "'><td>" +
                                                      data.result[i].name +
                                                      "</td><td>" +
                                                      data.result[i].supplier + 
@@ -29,6 +31,21 @@ if(!isLoggedIn()) {
                                                      "</td><td>" +
                                                      ( data.result[i].lowValue == null ? "No Low Value Used" : data.result[i].lowValue )+
                                                      "</td></tr>");
+                            }
+                            else
+                            {
+                                $("#getAllTable").append("<tr data-ingredientId='" + data.result[i].id + "'><td>" +
+                                                     data.result[i].name +
+                                                     "</td><td>" +
+                                                     data.result[i].supplier + 
+                                                     "</td><td>" + 
+                                                     data.result[i].quantity + 
+                                                     "</td><td>" +
+                                                     data.result[i].unitName +
+                                                     "</td><td>" +
+                                                     ( data.result[i].lowValue == null ? "No Low Value Used" : data.result[i].lowValue )+
+                                                     "</td></tr>");
+                            }
                         }
                         
                         // Set all the rows to open modal
