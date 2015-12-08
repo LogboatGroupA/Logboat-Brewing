@@ -50,7 +50,7 @@
                     /**
                      * Delete button
                      */
-                    if(user.id != <?= $_SESSION['userId']; ?>) {
+                    if(user.id !== <?= $_SESSION['userId']; ?>) {
                         var deleteButton = $("<button></button>");
                         deleteButton.addClass("btn btn-md btn-danger center-vertical right");
                         deleteButton.text("Delete");
