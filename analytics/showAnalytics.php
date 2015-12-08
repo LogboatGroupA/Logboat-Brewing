@@ -14,7 +14,13 @@ if(!isLoggedIn()) {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="../utilities/Chart.Scatter.min.js"></script>
+  <script src="../utilities/Chart.Scatter.min.js"></script>
+  <style>
+    canvas{
+        width: 100% !important;
+        height: auto !important;
+    }
+  </style>
 
 </head>
 <body>
@@ -49,38 +55,11 @@ if(!isLoggedIn()) {
           $.get("<?= getBaseUrl(); ?>api/analytics/chartData.php", {"brewId" : <?= (int) $_GET['brewId'] ?>}, function(jsonData) {
             
             var ctx1 = document.getElementById("chart1").getContext("2d");
-            var data = [
-                          {
-                            label: 'My First dataset',
-                            strokeColor: '#F16220',
-                            pointColor: '#F16220',
-                            pointStrokeColor: '#fff',
-                            data: [
-                              { x: 19, y: 65 }, 
-                              { x: 27, y: 59 }, 
-                              { x: 28, y: 69 }, 
-                              { x: 40, y: 81 },
-                              { x: 48, y: 56 }
-                            ]
-                          },
-                          {
-                            label: 'My Second dataset',
-                            strokeColor: '#007ACC',
-                            pointColor: '#007ACC',
-                            pointStrokeColor: '#fff',
-                            data: [
-                              { x: 19, y: 75}, 
-                              { x: 27, y: 69}, 
-                              { x: 28, y: 70}, 
-                              { x: 40, y: 31},
-                              { x: 48, y: 76},
-                              { x: 52, y: 23}, 
-                              { x: 24, y: 32}
-                            ]
-                          }
-                        ];
-            var chartObj1 = new Chart(ctx1).Scatter(data);
-            var chartObj2 = new Chart(ctx2).Line(jsonData.result[1]);
+            var ctx2 = document.getElementById("chart2").getContext("2d");
+            var data1 = jsonData.ph;
+            var data2 = jsonData.gravity;
+            var chartObj1 = new Chart(ctx1).Scatter(data1);
+            var chartObj2 = new Chart(ctx2).Scatter(data2);
           });
         </script>
       </div>
