@@ -7,12 +7,13 @@ $query =
         ing.id, 
         ing.name, 
         ing.supplier, 
-        ing.quantity,
+        ing.quantity as quantity,
         ing.unitId, 
-        unit.name as unitName 
+        unit.name as unitName,
+        ing.lowValue as low
     FROM ingredient AS ing
         LEFT OUTER JOIN unit ON ing.unitId = unit.id
-    WHERE (unit.name = "lbs" AND ing.quanity < 10) OR (unit.name = "bags" AND ing.quantity < 10) OR (unit.name = "oz" AND ing.quanity < 25) 
+    WHERE (quantity<=low) 
     ORDER BY ing.name';
 if(($result = $link->query($query))) {
     $ingredients = array();
