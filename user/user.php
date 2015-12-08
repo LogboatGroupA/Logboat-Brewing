@@ -18,7 +18,7 @@ $user = $data[0]; // Grab the first result (should only be one)
         <script>
             $(document).ready(function () {
                 $.getJSON("<?= getBaseUrl(); ?>api/brew/getBrewsForUser.php",
-                        {"userId": <?= $user[id]; ?>}, function (data) {
+                        {"userId": <?= $user['id']; ?>}, function (data) {
                     if (!data.success) {
                         console.error(data.error);
                         //TODO: handle error in UI
@@ -45,7 +45,7 @@ $user = $data[0]; // Grab the first result (should only be one)
                 });
 
                 $.getJSON("<?= getBaseUrl(); ?>api/beer/getBeersForUser.php",
-                        {"userId": <?= $user[id]; ?>}, function (data) {
+                        {"userId": <?= $user['id']; ?>}, function (data) {
                     if (!data.success) {
                         console.error(data.error);
                         //TODO: handle error in UI
@@ -72,7 +72,7 @@ $user = $data[0]; // Grab the first result (should only be one)
                 });
 
                 $.getJSON("<?= getBaseUrl(); ?>api/keg/getKegOrdersForUser.php",
-                        {"userId": <?= $user[id]; ?>}, function (data) {
+                        {"userId": <?= $user['id']; ?>}, function (data) {
                     if (!data.success) {
                         console.error(data.error);
                         //TODO: handle error in UI
