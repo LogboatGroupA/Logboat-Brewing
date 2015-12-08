@@ -81,6 +81,8 @@ if(!isLoggedIn()) {
                 scaleTimeFormat: "H:MM",
                 scaleDateTimeFormat:"mmm d, yyyy, hh:MM",
                 bezierCurve: false,
+                responsive: true,
+                maintainAspectRatio: true,
                 
                 scaleOverride: true,
                 scaleSteps: 7,
@@ -93,7 +95,9 @@ if(!isLoggedIn()) {
                 scaleDateFormat: "mmmm d",
                 scaleTimeFormat: "H:MM",
                 scaleDateTimeFormat:"mmm d, yyyy, hh:MM",
-                bezierCurve: false
+                bezierCurve: false,
+                responsive: true,
+                maintainAspectRatio: true
               }
               
               var chartObj1 = new Chart(ctx1).Scatter([
