@@ -18,17 +18,18 @@ if(!isLoggedIn()) {
                 $.getJSON("../api/ingredient/getLow.php", function(data) {
                     $("#showAllLoading").fadeOut(400, function() {
                         for(var i = 0, len = data.result.length; i < len; i++) {
-                                $("#getAllTable").append("<tr data-ingredientId='" + data.result[i].id + "'><td>" +
-                                                     data.result[i].name +
-                                                     "</td><td>" +
-                                                     data.result[i].supplier + 
-                                                     "</td><td>" + 
-                                                     data.result[i].quantity + 
-                                                     "</td><td>" +
-                                                     data.result[i].unitName +
-                                                     "</td><td>" +
-                                                     ( data.result[i].lowValue == null ? "No Low Value Used" : data.result[i].lowValue )+
-                                                     "</td></tr>");
+                                $("#getAllTable").append(
+                                    "<tr data-ingredientId='" + data.result[i].id + "'><td>" +
+                                    data.result[i].name +
+                                    "</td><td>" +
+                                    data.result[i].supplier + 
+                                    "</td><td>" + 
+                                    data.result[i].quantity + 
+                                    "</td><td>" +
+                                    data.result[i].unitName +
+                                    "</td><td>" +
+                                    ( data.result[i].lowValue == null ? "No Low Value Used" : data.result[i].lowValue )+
+                                    "</td></tr>");
                         }
                         $("#getAllTable").tablesorter();
                     });
@@ -45,6 +46,7 @@ if(!isLoggedIn()) {
     </head>
     <body>
         <?php require '../navbar.php'; ?>
+        <h2>Here are your Low Ingredients</h2>
         <div class="container">
             <div class="row">
                 <table id="getAllTable" class="table table-hover">
