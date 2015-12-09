@@ -13,6 +13,28 @@ body {
     padding: 12px;
 }
 
+.navbar-nav {
+    height: 50px;
+}
+
+a, .navbar-default .navbar-nav>li>a {
+    color: #333;
+    transition: color .1s .0s ease-in-out;
+    text-decoration: none;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 1em;
+}
+
+.navbar-default .navbar-nav>li>a {
+    font-size: 15px;
+}
+
+a:hover, .navbar-default .navbar-nav>li>a:hover {
+    color: #f08d20;
+    text-decoration: none;
+}
+
 .cell-basic {
     padding: 20px;
     background-color: #eee;
