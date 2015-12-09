@@ -7,6 +7,6 @@ require '../utilities/tools.php';
     <div id="errorMessage" class="alert alert-danger text-center" role="alert" style="display: none;"></div>
     <div class="form-group">
         <label for="name">Keg Serial Number</label>
-        <input type="text" class="form-control" id="serialNum" name="serialNum" maxlength="50" readonly>
+        <input type="text" class="form-control" id="serialNum" name="serialNum" maxlength="50" required>
     </div>
 </form>
