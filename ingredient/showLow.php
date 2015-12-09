@@ -46,7 +46,7 @@ if(!isLoggedIn()) {
     </head>
     <body>
         <?php require '../navbar.php'; ?>
-        <h2 class="text-center">Here are the Low Ingredients You Should Order</h2>
+        <h2 class="text-center">Here are the Low Ingredients You Should Order</h2><br>
         <div class="container">
             <div class="row">
                 <table id="getAllTable" class="table table-hover">
