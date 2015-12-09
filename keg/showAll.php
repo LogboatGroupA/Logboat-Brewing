@@ -100,7 +100,7 @@ if(!isLoggedIn()) {
                 
                 //Modal delete button clicked
                 $(".modalDelete").click(function() {
-                    if(confirm("Are you sure you want to delete this keg? This is not reversable!")) {
+                    if(confirm("Are you sure you want to delete this keg? This is not reversible!")) {
                         $.post("<?= getBaseUrl(); ?>api/keg/delete.php", {"kegId":$("#updateKegForm > #kegId").val()} , function(jsonData) {
                             
                             if(jsonData.success === false) {
