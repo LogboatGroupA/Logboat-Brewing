@@ -21,7 +21,7 @@ if(!isLoggedIn()) {
                             $("#getAllTable").append("<tr data-kegId='" + data.result[i].kegId + "'><td>" +
                                                      data.result[i].serialNum +
                                                      "</td><td>" +
-                                                     data.result[i].brew +
+                                                     data.result[i].beerName +
                                                      "</td><td>" +
                                                      (data.result[i].customerFirstName != null && data.result[i].customerLastName != null 
                                                         ? data.result[i].customerFirstName + " " + data.result[i].customerLastName
