@@ -7,13 +7,13 @@ $query =
         ing.id, 
         ing.name, 
         ing.supplier, 
-        ing.quantity as quantity,
+        ing.quantity,
         ing.unitId, 
         unit.name as unitName,
-        ing.lowValue as low
+        ing.lowValue
     FROM ingredient AS ing
         LEFT OUTER JOIN unit ON ing.unitId = unit.id
-    WHERE (quantity<=low) 
+    WHERE (ing.quantity<=ing.lowValue) 
     ORDER BY ing.name';
 if(($result = $link->query($query))) {
     $ingredients = array();
