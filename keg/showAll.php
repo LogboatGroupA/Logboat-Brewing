@@ -20,7 +20,9 @@ if(!isLoggedIn()) {
                         for(var i = 0, len = data.result.length; i < len; i++) {
                             $("#getAllTable").append("<tr data-kegId='" + data.result[i].kegId + "'><td>" +
                                                      data.result[i].serialNum +
-                                                     "</td><td>" + 
+                                                     "</td><td>" +
+                                                     data.result[i].brew +
+                                                     "</td><td>" +
                                                      (data.result[i].customerFirstName != null && data.result[i].customerLastName != null 
                                                         ? data.result[i].customerFirstName + " " + data.result[i].customerLastName
                                                         : "Not Rented Out") +
@@ -130,7 +132,7 @@ if(!isLoggedIn()) {
                 <a href="<?php echo getBaseUrl(); ?>ingredient/create.php" class="callCreateModal">Add a New Keg</a>
                 <table id="getAllTable" class="table table-hover">
                     <thead>
-                        <th>Keg Serial Num</th><th>Rented To</th>
+                        <th>Keg Serial Num</th><th>Brew</th><th>Rented To</th>
                     </thead>
                     <tbody>
                 </table>
