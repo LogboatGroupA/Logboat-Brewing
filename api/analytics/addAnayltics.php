@@ -6,14 +6,13 @@ require '../tools.php';
 $dateTime = new DateTime($_POST['dateTime']);
 $dateTime = $dateTime->format("Y-m-d H:i:s");
 try {
-    $data = Database::runQuery("INSERT INTO fermentation(value, dateTime, typeId, unitId, brewId, userId)
+    $data = Database::runQuery("INSERT INTO fermentation(value, dateTime, typeId, brewId, userId)
                                 VALUES (:value, :dateTime, :typeId, :unitId, :brewId, :userId)"
                                 , array(
                                     "value" => (double) $_POST['value'],
                                     "dateTime" => $dateTime,
-                                    "typeId" => (int) $_POST['quantity'],
-                                    "unitId" => (int) $_POST['unitId'],
-                                    "brewId" => (int) $_POST['beerId'],
+                                    "typeId" => (int) $_POST['typeId'],
+                                    "brewId" => (int) $_GET['beerId'],
                                     "userId" => $_SESSION['userId'])
                                 );
     if($data) {

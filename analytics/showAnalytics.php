@@ -31,6 +31,19 @@ if(!isLoggedIn()) {
           <label for="value">Value</label>
           <input type"text" class="form-control" id="value" name="value" required>
         </div>
+
+        <div class="form-group">
+          <label for="fermType">Beer</label>
+            <select name="fermType" class="form-control">
+                <?php 
+                $types = Database::runQuery("SELECT * FROM fermentationType");
+                foreach($types as $type) {
+                    echo "<option value='{$type['id']}'>{$type['name']}</option>";
+                }
+                ?>
+            </select>
+        </div>
+
         <!-- Need to add time in the picker or elsewhere because datetime is required -->
         <div class="form-group">
           <label for="fermentationDate">Fermentation Collection Date</label>
