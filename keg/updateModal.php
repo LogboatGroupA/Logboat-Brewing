@@ -12,7 +12,7 @@ $keg = $data[0]; // Grab the first result (should only be one)
         <label for="serialNum">Serial Number</label>
         <input type="text" class="form-control" id="serialNum" name="serialNum" maxlength="50" value="<?= $keg['serialNum'] ?>" readonly>
         <label for="brewName">Brew Name</label>
-        <input type="text" class="form-control" id="brewName" name="brewName" value="<?= $keg['brewName'] ?>">
+        <--! change to drop down --><input type="text" class="form-control" id="brewName" name="brewName" value="<?= $keg['brewName'] ?>">
         <label for="customerName">Customer Name</label>
         <input type="text" class="form-control" id="customerName" name="customerName" maxlength="50" value="<?= $keg['customerFirstName'] + "" + $keg['customerLastName']?>">
     </div>
