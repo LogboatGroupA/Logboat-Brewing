@@ -18,7 +18,7 @@ if(!isLoggedIn()) {
                 //Get all of the rows
                 $.getJSON("../api/beer/getAll.php", function(data) {
                     
-                    $("#showAllLoading").fadeOut("slow", function() {
+                    $("#showAllLoading").fadeOut(400, function() {
                         
                         data.result.forEach(function(beer) {
                             $("#getAllTable").append("<tr data-beerId='" + beer.id + "'><td>" +
@@ -36,7 +36,7 @@ if(!isLoggedIn()) {
                                 $("#updateModal .modal-body").html("<div style='text-align: center;'><i class='fa fa-beer fa-spin fa-5x text-center'></i></div>");
                                 $("#updateModal").modal('toggle');
                                 $.get("updateModal.php", {"beerId": $(this).attr("data-beerId")}, function(data) {
-                                    $("#updateModal .modal-body div").fadeOut("slow", function() {
+                                    $("#updateModal .modal-body div").fadeOut(400, function() {
                                         $("#updateModal .modal-body").hide().html(data).slideDown("slow");
                                     });
                                 });
@@ -53,7 +53,7 @@ if(!isLoggedIn()) {
                     $("#createModal .modal-body").html("<div style='text-align: center;'><i class='fa fa-beer fa-spin fa-5x text-center'></i></div>");
                     $("#createModal").modal('toggle');
                     $.get("createModal.php", function(data) {
-                        $("#createModal .modal-body div").fadeOut("slow", function() {
+                        $("#createModal .modal-body div").fadeOut(400, function() {
                             $("#createModal .modal-body").hide().html(data).slideDown("slow");
                         });
                     });
@@ -103,7 +103,7 @@ if(!isLoggedIn()) {
                 
                 //Modal delete button clicked
                 $(".modalDelete").click(function() {
-                    if(confirm("Are you sure you want to delete this recipe? This is not reversable!")) {
+                    if(confirm("Are you sure you want to delete this recipe? This is not reversible!")) {
                         $.post("<?= getBaseUrl(); ?>api/beer/delete.php", {"beerId":$("#updateBeerRecipeForm > #beerId").val()} , function(jsonData) {
                             
                             if(jsonData.success === false) {

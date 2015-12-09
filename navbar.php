@@ -17,7 +17,7 @@
         <li><a href="<?= getBaseUrl(); ?>schedule/showCalendar.php">Scheduling</a></li>
         <li><a href="<?= getBaseUrl(); ?>recipe/showAll.php">Recipes</a></li>
         <li><a href="<?= getBaseUrl(); ?>keg/showAll.php">Keg Rentals</a></li>
-        <li><a href="<?= getBaseUrl(); ?>construction.php">Reports</a></li>
+        <li><a href="<?= getBaseUrl(); ?>ingredient/showLow.php">Orders</a></li>
         <li><a href="<?= getBaseUrl(); ?>analytics/selectBrew.php">Analytics</a></li>
       </ul>
         

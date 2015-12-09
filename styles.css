@@ -1,3 +1,7 @@
+body {
+    background: #eee url(http://static1.squarespace.com/static/54f0cacce4b094783bb94952/t/55678847e4b0f29daa633303/1432848455862/Logboat+Background.jpg) repeat;
+}
+
 .cell-basic {
     padding: 20px;
     background-color: #eee;
@@ -9,6 +13,11 @@
 .inline {
     display: inline;
 }
+
+.inline-block {
+    display: inline-block;
+}
+
 .no-spacing {
     padding: 0;
     margin: 0;
@@ -40,4 +49,16 @@
 
 .vertical-line {
     border-left: thick solid black;
+}
+
+.gray {
+    color: #999999;
+}
+
+.dark-gray {
+    color: #666666;
+}
+
+.sub-header {
+    margin: 12px 0 0 0;
 }

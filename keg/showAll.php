@@ -16,7 +16,7 @@ if(!isLoggedIn()) {
             $(document).ready(function() {
                 //Get all of the rows
                 $.getJSON("../api/keg/getAll.php", function(data) {
-                    $("#showAllLoading").fadeOut("slow", function() {
+                    $("#showAllLoading").fadeOut(400, function() {
                         for(var i = 0, len = data.result.length; i < len; i++) {
                             $("#getAllTable").append("<tr data-kegId='" + data.result[i].kegId + "'><td>" +
                                                      data.result[i].serialNum +
@@ -33,7 +33,7 @@ if(!isLoggedIn()) {
                                 $("#updateModal .modal-body").html("<div style='text-align: center;'><i class='fa fa-beer fa-spin fa-5x text-center'></i></div>");
                                 $("#updateModal").modal('toggle');
                                 $.get("updateModal.php", {"kegId": $(this).attr("data-kegId")}, function(data) {
-                                    $("#updateModal .modal-body div").fadeOut("slow", function() {
+                                    $("#updateModal .modal-body div").fadeOut(400, function() {
                                         $("#updateModal .modal-body").hide().html(data).slideDown("slow");
                                     });
                                 });
@@ -50,7 +50,7 @@ if(!isLoggedIn()) {
                     $("#createModal .modal-body").html("<div style='text-align: center;'><i class='fa fa-beer fa-spin fa-5x text-center'></i></div>");
                     $("#createModal").modal('toggle');
                     $.get("createModal.php", function(data) {
-                        $("#createModal .modal-body div").fadeOut("slow", function() {
+                        $("#createModal .modal-body div").fadeOut(400, function() {
                             $("#createModal .modal-body").hide().html(data).slideDown("slow");
                         });
                     });
@@ -100,7 +100,7 @@ if(!isLoggedIn()) {
                 
                 //Modal delete button clicked
                 $(".modalDelete").click(function() {
-                    if(confirm("Are you sure you want to delete this keg? This is not reversable!")) {
+                    if(confirm("Are you sure you want to delete this keg? This is not reversible!")) {
                         $.post("<?= getBaseUrl(); ?>api/keg/delete.php", {"kegId":$("#updateKegForm > #kegId").val()} , function(jsonData) {
                             
                             if(jsonData.success === false) {

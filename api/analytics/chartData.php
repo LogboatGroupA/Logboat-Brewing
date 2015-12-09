@@ -1,22 +1,43 @@
-<?php 
+<?php
 
-$chartHeaders = Database::runQuery("SELECT dateTime FROM fermentation WHERE brewId = :brewId" array('brewId',$_POST['brewId']));
-$data = Database::runQuery("SELECT value FROM fermentation WHERE brewId = :brewId" array('brewId',$_POST['brewId']));
-$return['success'] = true;
-$return['chartData'] = array(
-  "labels" => $chartHeaders
-  "datasets" => array( array(
-     'label' => "Fermentation Data", //add beer name - brewid here
-     'fillColor' => "rgba(220,220,220,0.2)",
-    'strokeColor' => "rgba(220,220,220,1)",
-    'pointColor' => "rgba(220,220,220,1)",
-    'pointStrokeColor' =>"#fff",
-    'pointHighlightFill' => "#fff",
-    'pointHighlightStroke' =>"rgba(220,220,220,1)",
-    'data' => $data
-  ));
-);
+require '../init.php';
+require '../tools.php';
 
-echo json_encode($return);
+//Should really just make a Database non-static object option....
+$conn = Database::getConn();
 
-?>
+$data = Database::runQuery(
+  "SELECT 
+    value, 
+    dateTime, 
+    typeId
+  FROM fermentation
+  WHERE brewId = :brewId
+  ORDER BY typeId, dateTime"
+  , array('brewId' => (int) $_GET['brewId']), $conn);
+  
+if(count($data) == 0){
+  fail("No Data To Display");
+}
+  
+$brewDates = Database::runQuery("SELECT brewEnd, brewStart FROM brew WHERE id = :brewId", array("brewId" => (int) $_GET['brewId']), $conn);
+$brewDates = $brewDates[0]; // Select the only one that should show
+
+//Set min x-axis to first day of brew
+// $return["ph"][] = array("x" => $brewDates['brewStart']);
+// $return['gravity'][] = array("x" => $brewDates['brewStart'], "y" => null);
+
+//Set datapoints for graph
+foreach($data as $datapoint) {
+  if($datapoint["typeId"] == 1) {
+    $return["ph"][] = array("x" => $datapoint['dateTime'], "y" => $datapoint['value']);
+  } elseif($datapoint['typeId'] == 11) {
+    $return['gravity'][] = array("x" => $datapoint['dateTime'], "y" => $datapoint['value']);
+  }
+}
+
+//Set max x-axis to last day of brew
+$return["ph"][] = array("x" => $brewDates['brewEnd']);
+$return['gravity'][] = array("x" => $brewDates['brewEnd']);
+
+success($return);

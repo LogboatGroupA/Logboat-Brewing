@@ -10,6 +10,7 @@ $query =
         ing.supplier, 
         ing.quantity,
         ing.unitId, 
+        ing.lowValue,
         unit.name as unitName 
     FROM ingredient AS ing
         LEFT OUTER JOIN unit ON ing.unitId = unit.id 

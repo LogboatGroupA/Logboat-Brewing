@@ -26,11 +26,11 @@ function isUserAdmin() {
 
 function getBaseUrl() {
     //return "https://cs3380-jam9rd.cloudapp.net/LogboatBrewing/";    //Jacob
-    return "https://logboat-brewing-percyodi.c9.io/Logboat-Brewing/"; //Pearse
+    //return "https://logboat-brewing-percyodi.c9.io/Logboat-Brewing/"; //Pearse
     //Devun
     //Seth
     //Peter
-    //return "https://logboat.cloudapp.net/";                       //Master VM
+    return "https://logboat.cloudapp.net/";                       //Master VM
 }
 
 /*
@@ -74,18 +74,22 @@ class Database {
         }
     }
     
-    public static function runQuery($queryStr, $bind_params = array()) {
-        try {
-            $connection = new PDO(  "mysql:host=" . self::$host
-                                    . ";dbname=" . self::$dbname
-                                    . ";port=" . self::$port
-                                    , self::$username
-                                    , self::$password
-            );
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-        } catch(PDOException $e) {
-            echo "PDO Connection Exception: " . $e->getMessage();
+    public static function runQuery($queryStr, $bind_params = array(), $conn = null) {
+        if($conn == null or !$conn instanceof PDO) {
+            try {
+                $connection = new PDO(  "mysql:host=" . self::$host
+                                        . ";dbname=" . self::$dbname
+                                        . ";port=" . self::$port
+                                        , self::$username
+                                        , self::$password
+                );
+                $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            } catch(PDOException $e) {
+                echo "PDO Connection Exception: " . $e->getMessage();
+            }
+        } else {
+            $connection = $conn;
         }
         
         try {

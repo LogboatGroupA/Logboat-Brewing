@@ -37,4 +37,8 @@ $data = $data[0]; // Grab the first result (should only be one)
             ?>
         </select>
     </div>
+    <div class="form-group">
+        <label for="lowValue">Low Value</label>
+        <input type="number" class="form-control" id="lowValue" name="lowValue" value='<?php echo $data['lowValue'] ?>' required>
+    </div>
 </form>
