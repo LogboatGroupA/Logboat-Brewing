@@ -1,3 +1,7 @@
+body {
+    background: #eee url(http://static1.squarespace.com/static/54f0cacce4b094783bb94952/t/55678847e4b0f29daa633303/1432848455862/Logboat+Background.jpg) repeat;
+}
+
 .cell-basic {
     padding: 20px;
     background-color: #eee;
