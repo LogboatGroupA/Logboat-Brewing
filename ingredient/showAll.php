@@ -122,7 +122,7 @@ if(!isLoggedIn()) {
                 
                 //Modal delete button clicked
                 $(".modalDelete").click(function() {
-                    if(confirm("Are you sure you want to delete this ingredient? This is not reversable!")) {
+                    if(confirm("Are you sure you want to delete this ingredient? This is not reversible!")) {
                         $.post("<?= getBaseUrl(); ?>api/ingredient/delete.php", {"id":$("#updateIngredientForm > #ingredientId").val()} , function(jsonData) {
                             
                             if(jsonData.success === false) {
