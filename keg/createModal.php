@@ -9,4 +9,12 @@ require '../utilities/tools.php';
         <label for="name">Keg Serial Number</label>
         <input type="text" class="form-control" id="serialNum" name="serialNum" maxlength="50" required>
     </div>
+    <div class="form-group">
+        <label for="name">Beer Name</label>
+        <input type="text" class="form-control" id="beerName" name="beerName" maxlength="50" required>
+    </div>
+    <div class="form-group">
+        <label for="name">Customer Name</label>
+        <input type="text" class="form-control" id="customerName" name="customerName" maxlength="50" required>
+    </div>
 </form>
