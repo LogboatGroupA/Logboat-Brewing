@@ -22,7 +22,7 @@ if(!isLoggedIn()) {
                                                      data.result[i].serialNum +
                                                      "</td><td>" +
                                                      (data.result[i].beerName != null
-                                                        ? data.result[i].beerName + 
+                                                        ? data.result[i].beerName  
                                                         : "Empty") +
                                                      "</td><td>" +
                                                      (data.result[i].customerFirstName != null && data.result[i].customerLastName != null 
