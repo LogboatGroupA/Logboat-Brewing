@@ -103,7 +103,7 @@ if(!isLoggedIn()) {
                 
                 //Modal delete button clicked
                 $(".modalDelete").click(function() {
-                    if(confirm("Are you sure you want to delete this recipe? This is not reversable!")) {
+                    if(confirm("Are you sure you want to delete this recipe? This is not reversible!")) {
                         $.post("<?= getBaseUrl(); ?>api/beer/delete.php", {"beerId":$("#updateBeerRecipeForm > #beerId").val()} , function(jsonData) {
                             
                             if(jsonData.success === false) {
