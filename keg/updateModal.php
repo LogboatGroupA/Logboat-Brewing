@@ -10,6 +10,6 @@ $keg = $data[0]; // Grab the first result (should only be one)
     <div id="errorMessage" class="alert alert-danger text-center" role="alert" style="display: none;"></div>
     <div class="form-group">
         <label for="serialNum">Serial Number</label>
-        <input type="text" class="form-control" id="serialNum" name="serialNum" maxlength="50" required value="<?= $keg['serialNum'] ?>">
+        <input type="text" class="form-control" id="serialNum" name="serialNum" maxlength="50" value="<?= $keg['serialNum'] ?>" readonly>
     </div>
 </form>
