@@ -61,6 +61,7 @@ if(!isLoggedIn()) {
               </span>
           </div>
         </div>
+        <input type="hidden" name="brewId" value='<?=$_GET['brewId']?>'>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
 

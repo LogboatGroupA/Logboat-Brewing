@@ -12,7 +12,7 @@ try {
                                     "value" => (double) $_POST['value'],
                                     "dateTime" => $dateTime,
                                     "typeId" => (int) $_POST['fermType'],
-                                    "brewId" => (int) $_GET['brewId'],
+                                    "brewId" => (int) $_POST['brewId'],
                                     "userId" => $_SESSION['userId'])
                                 );
     if($data) {
