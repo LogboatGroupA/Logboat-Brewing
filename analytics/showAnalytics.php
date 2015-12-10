@@ -26,7 +26,7 @@ if(!isLoggedIn()) {
 <body>
   <?php require '../navbar.php'; ?>
     <div class="container">
-      <form id="addBrewFermentation" method="post" action="<?php echo getBaseUrl(); ?>api/anayltics/addAnayltics.php"> <!-- need to send the selected brews info to addAnayltics.php for proper insertion along with this other data-->
+      <form id="addBrewFermentation" method="post" action="<?php echo getBaseUrl(); ?>api/analytics/addAnayltics.php">
         <div class="form-group">
           <label for="value">Value</label>
           <input type"text" class="form-control" id="value" name="value" required>
@@ -54,7 +54,7 @@ if(!isLoggedIn()) {
               </span>
           </div>
         </div>
-        <button type="button" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </form>
 
       <div id="chartContainer">

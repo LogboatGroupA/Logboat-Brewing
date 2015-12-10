@@ -7,7 +7,7 @@ $dateTime = new DateTime($_POST['dateTime']);
 $dateTime = $dateTime->format("Y-m-d H:i:s");
 try {
     $data = Database::runQuery("INSERT INTO fermentation(value, dateTime, typeId, brewId, userId)
-                                VALUES (:value, :dateTime, :typeId, :unitId, :brewId, :userId)"
+                                VALUES (:value, :dateTime, :typeId, :brewId, :userId)"
                                 , array(
                                     "value" => (double) $_POST['value'],
                                     "dateTime" => $dateTime,
