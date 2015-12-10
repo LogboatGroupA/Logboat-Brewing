@@ -22,10 +22,10 @@ function redirect($relativePathFromBaseUrl = '') {
 
 function getBaseUrl() {
     //return "https://cs3380-jam9rd.cloudapp.net/LogboatBrewing/";    //Jacob
-    //return "https://logboat-brewing-percyodi.c9.io/Logboat-Brewing/"; //Pearse
+    return "https://logboat-brewing-percyodi.c9.io/Logboat-Brewing/"; //Pearse
     //return "https://cs3380-dpshd7.cloudapp.net/LogboatBrewing/"; //Devun
     //Seth
     //Peter
-    return "https://cs3380-dpshd7.cloudapp.net/Logboat-Brewing/";
+    //return "https://cs3380-dpshd7.cloudapp.net/Logboat-Brewing/";
     //return "https://logboat.cloudapp.net/";                       //Master VM
 }
