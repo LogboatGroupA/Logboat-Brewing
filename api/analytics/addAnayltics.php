@@ -3,7 +3,7 @@
 require '../init.php';
 require '../tools.php';
 
-$dateTime = new DateTime($_POST['dateTime']);
+$dateTime = new DateTime($_POST['fermentationDate']);
 $dateTime = $dateTime->format("Y-m-d H:i:s");
 try {
     $data = Database::runQuery("INSERT INTO fermentation(value, dateTime, typeId, brewId, userId)
@@ -11,8 +11,8 @@ try {
                                 , array(
                                     "value" => (double) $_POST['value'],
                                     "dateTime" => $dateTime,
-                                    "typeId" => (int) $_POST['typeId'],
-                                    "brewId" => (int) $_GET['beerId'],
+                                    "typeId" => (int) $_POST['fermType'],
+                                    "brewId" => (int) $_GET['brewId'],
                                     "userId" => $_SESSION['userId'])
                                 );
     if($data) {
