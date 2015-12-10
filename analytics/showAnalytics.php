@@ -21,7 +21,14 @@ if(!isLoggedIn()) {
         height: auto !important;
     }
   </style>
-
+  <script>
+    $(document).ready(function() {
+      $(".datepicker").datetimepicker({
+          showTodayButton: true,
+          showClose: true,
+      });
+    });
+  </script>
 </head>
 <body>
   <?php require '../navbar.php'; ?>
