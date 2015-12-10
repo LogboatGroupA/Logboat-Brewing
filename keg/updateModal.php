@@ -2,7 +2,9 @@
 require '../utilities/init.php';
 require '../utilities/tools.php';
 
-$data = Database::runQuery("SELECT * FROM keg WHERE id = :id", array("id" => $_GET['kegId']));
+$conn = Database::getConn();
+
+$data = Database::runQuery("SELECT * FROM keg WHERE id = :id", array("id" => $_GET['kegId']), $conn);
 $keg = $data[0]; // Grab the first result (should only be one)
 ?>
 <form id="updateKegForm" method="post" action="<?= getBaseUrl(); ?>api/keg/update.php">
@@ -14,10 +16,24 @@ $keg = $data[0]; // Grab the first result (should only be one)
     </div>
     <div class="form-group">
         <label for="brewName">Brew Name</label>
-        <--! change to drop down --><input type="text" class="form-control" id="brewName" name="brewName" value="<?= $keg['brewName'] ?>">
+        <select name="brewName" class="form-control">
+            <?php
+                $beerNames = Database::runQuery("SELECT name from beer ORDER BY name", array(), $conn);
+                foreach($beerNames as $beerName){
+                    if($beerName['id'] == $beer)
+                }
+            ?>
+        </select>
     </div>
     <div class="form-group">
         <label for="customerName">Customer Name</label>
-        <input type="text" class="form-control" id="customerName" name="customerName" maxlength="50" value="<?= $keg['customerFirstName'] + "" + $keg['customerLastName']?>">
+        <select name="customerName" class="form-control">
+            <?php
+                $customerNames = Database::runQuery("Select firstName, lastName from customer
+                JOIN kegorder ON customer.Id 
+                JOIN keg ON keg.Id
+                WHERE keg.id = kegorder.id AND kegorder.id = customer.id", array(), $conn)
+            ?>
+        </select>
     </div>
 </form>
