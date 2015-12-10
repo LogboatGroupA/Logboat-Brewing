@@ -63,13 +63,13 @@ if(!isLoggedIn()) {
               //Convert MySQL date strings to JS Date for PH
               var phData = jsonData.result.ph;
               for(var i = 0, len = phData.length; i < len; i++) {
-                phData[i].x = new Date(phData[i].x);
+                phData[i].x = Date.parse(phData[i].x);
               }
               
               //Convert MySQL date strings to JS Date for Gravity
               var gravityData = jsonData.result.gravity;
               for(var i = 0, len = gravityData.length; i < len; i++) {
-                gravityData[i].x = new Date(gravityData[i].x);
+                gravityData[i].x = Date.parse(gravityData[i].x);
               }
               
               console.dir(phData);
