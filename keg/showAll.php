@@ -131,10 +131,10 @@ if(!isLoggedIn()) {
         <?php require '../navbar.php'; ?>
         <div class="container">
             <div class="row">
-                <a href="<?php echo getBaseUrl(); ?>ingredient/create.php" class="callCreateModal">Add a New Keg</a>
+                <a href="<?php echo getBaseUrl(); ?>ingredient/create.php" class="callCreateModal">Add a New Keg</a><br>
                 <table id="getAllTable" class="table table-hover">
                     <thead>
-                        <th>Keg Serial Num</th><th>Brew</th><th>Rented To</th>
+                        <th>Keg Serial Num</th><th>Beer</th><th>Rented To</th>
                     </thead>
                     <tbody>
                 </table>
