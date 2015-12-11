@@ -37,7 +37,7 @@ $keg = $data[0]; // Grab the first result (should only be one)
                 //LEFT OUTER JOIN kegorder ON customer.Id 
                 //LEFT OUTER JOIN keg ON keg.Id
                 //WHERE keg.id = kegorder.id AND kegorder.id = customer.id", array(), $conn);
-                "Select * from user",array(),$conn);
+                "Select * from customer",array(),$conn);
                 // foreach($customerNames as $customerName){
                 //     if($customerName['customerId'] == $customerName['customer.id']){
                 //         $selected = "selected";
