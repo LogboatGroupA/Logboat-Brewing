@@ -18,7 +18,7 @@ if(!isLoggedIn()) {
                 $.getJSON("../api/keg/getAll.php", function(data) {
                     $("#showAllLoading").fadeOut(400, function() {
                         for(var i = 0, len = data.result.length; i < len; i++) {
-                            $("#getAllTable").append("<tr data-kegId='" + data.result[i].kegId + "' data-customerId='" + data.result[i].customerId +"'><td>" +
+                            $("#getAllTable").append("<tr data-beerId = '"+ data.result[i].beerId + "' + data-kegId='" + data.result[i].kegId + "' data-customerId='" + data.result[i].customerId +"'><td>" +
                                                      data.result[i].serialNum +
                                                      "</td><td>" +
                                                      (data.result[i].beerName != null
@@ -36,7 +36,7 @@ if(!isLoggedIn()) {
                                 console.log("Clicked");
                                 $("#updateModal .modal-body").html("<div style='text-align: center;'><i class='fa fa-beer fa-spin fa-5x text-center'></i></div>");
                                 $("#updateModal").modal('toggle');
-                                $.get("updateModal.php", {"kegId": $(this).attr("data-kegId"), "customerId" : $(this).attr("data-customerId")}, function(data) {
+                                $.get("updateModal.php", {"kegId": $(this).attr("data-kegId"), "customerId" : $(this).attr("data-customerId"), "beerId": $(this).attr("data-beerId")}, function(data) {
                                     $("#updateModal .modal-body div").fadeOut(400, function() {
                                         $("#updateModal .modal-body").hide().html(data).slideDown("slow");
                                     });
