@@ -10,6 +10,7 @@ $keg = $data[0]; // Grab the first result (should only be one)
 $customerData = Database::runQuery("SELECT id, firstName, lastName from customer WHERE id= :id", array("id" => $_GET['customerId']),$conn);
 $theCustomer = $customerData[0];
 
+
 ?>
 <form id="updateKegForm" method="post" action="<?= getBaseUrl(); ?>api/keg/update.php">
     <input type="hidden" name="kegId" id="kegId" value="<?= $keg['id']; ?>">
@@ -19,8 +20,8 @@ $theCustomer = $customerData[0];
         <input type="text" class="form-control" id="serialNum" name="serialNum" maxlength="50" value="<?= $keg['serialNum'] ?>" readonly>
     </div>
     <div class="form-group">
-        <label for="brewName">Brew Name</label>
-        <select name="brewName" class="form-control">
+        <label for="beerName">Beer Name</label>
+        <select name="beerName" class="form-control">
             <?php
                 $beerNames = Database::runQuery(//"SELECT name from beer ORDER BY name
                 // LEFT OUTER JOIN brew ON  
@@ -28,7 +29,13 @@ $theCustomer = $customerData[0];
                 // LEFT OUTER JOIN keg ON", array(), $conn);
                 "SELECT * from beer",array(),$conn);
                 foreach($beerNames as $beerName){
-                    echo "<option value='{$beerName['beer.id']}'> {$beerName['name']}</option>";
+                    if($beerName['name'] == $_GET['beerId']){
+                        $selected = "selected";
+                    }
+                    else{
+                        $selected = "";
+                    }
+                    echo "<option value='{$beerName['beer.id']}' $selected> {$beerName['name']}</option>";
                 }
             ?>
         </select>
@@ -37,20 +44,7 @@ $theCustomer = $customerData[0];
         <label for="customerName">Customer Name</label>
         <select name="customerName" class="form-control">
             <?php
-                $customers = Database::runQuery(//"Select firstName, lastName from customer
-                //LEFT OUTER JOIN kegorder ON customer.Id 
-                //LEFT OUTER JOIN keg ON keg.Id
-                //WHERE keg.id = kegorder.id AND kegorder.id = customer.id", array(), $conn);
-                "Select * from customer",array(),$conn);
-                // foreach($customerNames as $customerName){
-                    // if($customerName['customerId'] == $customerName['customer.id']){
-                    //     $selected = "selected";
-                    // }
-                    // else{
-                    //     $selected = "";
-                    // }
-                // echo "<option value='{$customerName['customerId']}' $selected>{$customerName['firstName']}  {$customerName['lastName']}</option>";
-                // echo "<option value=''";
+                $customers = Database::runQuery("Select * from customer",array(),$conn);
                 foreach($customers as $customer){
                     if($theCustomer['id'] == $customer['id']){
                         $selected = "selected";
