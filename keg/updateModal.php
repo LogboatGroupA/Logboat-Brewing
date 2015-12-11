@@ -32,7 +32,16 @@ $keg = $data[0]; // Grab the first result (should only be one)
                 $customerNames = Database::runQuery("Select firstName, lastName from customer
                 JOIN kegorder ON customer.Id 
                 JOIN keg ON keg.Id
-                WHERE keg.id = kegorder.id AND kegorder.id = customer.id", array(), $conn)
+                WHERE keg.id = kegorder.id AND kegorder.id = customer.id", array(), $conn);
+                foreach($customerNames as $customerName){
+                    if($customerName['customerId'] == $customerName['customer.id']){
+                        $selected = "selected";
+                    }
+                    else{
+                        $selected = "";
+                    }
+                echo "<option value='{$customerName['customerId']}' $selected>{$customerName['firstName'] + $customerName['lastName'] }</option>";
+                }
             ?>
         </select>
     </div>
