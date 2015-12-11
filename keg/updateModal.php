@@ -35,7 +35,7 @@ $theCustomer = $customerData[0];
                     else{
                         $selected = "";
                     }
-                    echo "<option value='{$beerName['beer.id']}' $selected> {$beerName['name']}</option>";
+                    echo "<option value='{$beerName['beerId']}' $selected> {$beerName['name']}</option>";
                 }
             ?>
         </select>
