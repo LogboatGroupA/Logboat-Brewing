@@ -18,7 +18,14 @@ $keg = $data[0]; // Grab the first result (should only be one)
         <label for="brewName">Brew Name</label>
         <select name="brewName" class="form-control">
             <?php
-                $beerNames = Database::runQuery("SELECT name from beer ORDER BY name", array(), $conn);
+                $beerNames = Database::runQuery(//"SELECT name from beer ORDER BY name
+                // LEFT OUTER JOIN brew ON  
+                // LEFT OUTER JOIN kegorder ON
+                // LEFT OUTER JOIN keg ON", array(), $conn);
+                "SELECT * from beer",array(),$conn);
+                foreach($beerNames as $beerName){
+                    echo "<option value='{$beerName['beer.id']}'> {$beerName['name']}</option>";
+                }
             ?>
         </select>
     </div>
@@ -26,18 +33,22 @@ $keg = $data[0]; // Grab the first result (should only be one)
         <label for="customerName">Customer Name</label>
         <select name="customerName" class="form-control">
             <?php
-                $customerNames = Database::runQuery("Select firstName, lastName from customer
-                JOIN kegorder ON customer.Id 
-                JOIN keg ON keg.Id
-                WHERE keg.id = kegorder.id AND kegorder.id = customer.id", array(), $conn);
+                $customerNames = Database::runQuery(//"Select firstName, lastName from customer
+                //LEFT OUTER JOIN kegorder ON customer.Id 
+                //LEFT OUTER JOIN keg ON keg.Id
+                //WHERE keg.id = kegorder.id AND kegorder.id = customer.id", array(), $conn);
+                "Select * from user",array(),$conn);
+                // foreach($customerNames as $customerName){
+                //     if($customerName['customerId'] == $customerName['customer.id']){
+                //         $selected = "selected";
+                //     }
+                //     else{
+                //         $selected = "";
+                //     }
+                // echo "<option value='{$customerName['customerId']}' $selected>{$customerName['firstName']}  {$customerName['lastName']}</option>";
+                // echo "<option value=''";
                 foreach($customerNames as $customerName){
-                    if($customerName['customerId'] == $customerName['customer.id']){
-                        $selected = "selected";
-                    }
-                    else{
-                        $selected = "";
-                    }
-                echo "<option value='{$customerName['customerId']}' $selected>{$customerName['firstName']}  {$customerName['lastName']}</option>";
+                    echo "<option value='{$customerName['customerId']}'> {$customerName['firstName']}  {$customerName['lastName']}</option>";
                 }
             ?>
         </select>
