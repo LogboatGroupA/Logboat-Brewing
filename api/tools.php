@@ -27,11 +27,7 @@ function isUserAdmin() {
 function getBaseUrl() {
     //return "https://cs3380-jam9rd.cloudapp.net/LogboatBrewing/";    //Jacob
     //return "https://logboat-brewing-percyodi.c9.io/Logboat-Brewing/"; //Pearse
-<<<<<<< HEAD
     //return "https://cs3380-dpshd7.cloudapp.net/Logboat-Brewing/"; //Devun
-=======
-    //Devun
->>>>>>> master
     //Seth
     //Peter
     return "https://logboat.cloudapp.net/";                       //Master VM
