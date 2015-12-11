@@ -7,7 +7,7 @@ $conn = Database::getConn();
 $data = Database::runQuery("SELECT * FROM keg WHERE id = :id", array("id" => $_GET['kegId']), $conn);
 $keg = $data[0]; // Grab the first result (should only be one)
 
-$customerData = Datab...("SELECT id, firstName, lastName from customer WHERE id= :id", array("id" => $_GET['customerId']),$conn);
+$customerData = Database::runQuery("SELECT id, firstName, lastName from customer WHERE id= :id", array("id" => $_GET['customerId']),$conn);
 $theCustomer = $customerData[0];
 
 ?>
