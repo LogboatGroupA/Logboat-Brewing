@@ -58,7 +58,7 @@ $theCustomer = $customerData[0];
                     else{
                         $selected = "";
                     }
-                    echo "<option value='{$customerName['customerId']}' $selected> {$customerName['firstName']}  {$customerName['lastName']}</option>";
+                    echo "<option value='{$customer['customerId']}' $selected> {$customer['firstName']}  {$customer['lastName']}</option>";
                 }
             ?>
         </select>
