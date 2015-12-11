@@ -19,9 +19,6 @@ $keg = $data[0]; // Grab the first result (should only be one)
         <select name="brewName" class="form-control">
             <?php
                 $beerNames = Database::runQuery("SELECT name from beer ORDER BY name", array(), $conn);
-                foreach($beerNames as $beerName){
-                    if($beerName['id'] == $beer)
-                }
             ?>
         </select>
     </div>
