@@ -18,7 +18,7 @@ if(!isLoggedIn()) {
                 $.getJSON("../api/keg/getAll.php", function(data) {
                     $("#showAllLoading").fadeOut(400, function() {
                         for(var i = 0, len = data.result.length; i < len; i++) {
-                            $("#getAllTable").append("<tr data-kegId='" + data.result[i].kegId + "' data-customerId='" + data.result[i].customerFirstName + data.result[i].customerLastName +"'><td>" +
+                            $("#getAllTable").append("<tr data-kegId='" + data.result[i].kegId + "' data-customerId='" + data.result[i].customerId +"'><td>" +
                                                      data.result[i].serialNum +
                                                      "</td><td>" +
                                                      (data.result[i].beerName != null
