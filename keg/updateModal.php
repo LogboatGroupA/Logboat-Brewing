@@ -37,7 +37,7 @@ $keg = $data[0]; // Grab the first result (should only be one)
                     else{
                         $selected = "";
                     }
-                echo "<option value='{$customerName['customerId']}' $selected>{$customerName['firstName']} . $selected>{$customerName['lastName'] }</option>";
+                echo "<option value='{$customerName['customerId']}' $selected>{$customerName['firstName']} . {$customerName['lastName']}</option>";
                 }
             ?>
         </select>
