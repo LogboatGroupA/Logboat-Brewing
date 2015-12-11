@@ -6,6 +6,10 @@ $conn = Database::getConn();
 
 $data = Database::runQuery("SELECT * FROM keg WHERE id = :id", array("id" => $_GET['kegId']), $conn);
 $keg = $data[0]; // Grab the first result (should only be one)
+
+$customerData = Datab...("SELECT id, firstName, lastName from customer WHERE id= :id", array("id" => $_GET['customerId']),$conn);
+$theCustomer = $customerData[0];
+
 ?>
 <form id="updateKegForm" method="post" action="<?= getBaseUrl(); ?>api/keg/update.php">
     <input type="hidden" name="kegId" id="kegId" value="<?= $keg['id']; ?>">
@@ -33,22 +37,28 @@ $keg = $data[0]; // Grab the first result (should only be one)
         <label for="customerName">Customer Name</label>
         <select name="customerName" class="form-control">
             <?php
-                $customerNames = Database::runQuery(//"Select firstName, lastName from customer
+                $customers = Database::runQuery(//"Select firstName, lastName from customer
                 //LEFT OUTER JOIN kegorder ON customer.Id 
                 //LEFT OUTER JOIN keg ON keg.Id
                 //WHERE keg.id = kegorder.id AND kegorder.id = customer.id", array(), $conn);
                 "Select * from customer",array(),$conn);
                 // foreach($customerNames as $customerName){
-                //     if($customerName['customerId'] == $customerName['customer.id']){
-                //         $selected = "selected";
-                //     }
-                //     else{
-                //         $selected = "";
-                //     }
+                    // if($customerName['customerId'] == $customerName['customer.id']){
+                    //     $selected = "selected";
+                    // }
+                    // else{
+                    //     $selected = "";
+                    // }
                 // echo "<option value='{$customerName['customerId']}' $selected>{$customerName['firstName']}  {$customerName['lastName']}</option>";
                 // echo "<option value=''";
-                foreach($customerNames as $customerName){
-                    echo "<option value='{$customerName['customerId']}'> {$customerName['firstName']}  {$customerName['lastName']}</option>";
+                foreach($customers as $customer){
+                    if($theCustomer['id'] == $customer['id']){
+                        $selected = "selected";
+                    }
+                    else{
+                        $selected = "";
+                    }
+                    echo "<option value='{$customerName['customerId']}' $selected> {$customerName['firstName']}  {$customerName['lastName']}</option>";
                 }
             ?>
         </select>
