@@ -33,6 +33,19 @@ function getBaseUrl() {
     return "https://logboat.cloudapp.net/";                       //Master VM
 }
 
+function getArrayForMultiInputKey($key) {
+    $values = array();
+    $counter = 0;
+    
+    while(isset($_POST[$key . $counter])) {
+        $value = htmlspecialchars($_POST[$key . $counter]);
+        array_push($values, $value);
+        $counter++;
+    }
+    
+    return $values;
+}
+
 /*
  * Create a random string
  * @author XEWeb <http://www.xeweb.net>

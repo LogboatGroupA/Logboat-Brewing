@@ -32,7 +32,7 @@ $ingredients = Database::runQuery("SELECT ing.id, ing.name, unit.name AS units F
     <div class="form-group">
         <label for="ingredients">Ingredients</label>
         <div id="firstIng" class="input-multi-container clearfix">
-            <select name="ingredient" class="ingredient form-control input-multi">
+            <select name="ingredient0" class="ingredient form-control input-multi">
                 <?php
                 foreach($ingredients as $ingredient) {
                     echo "<option value='{$ingredient['id']}'>{$ingredient['name']} ({$ingredient['units']})</option>";
@@ -48,7 +48,11 @@ $ingredients = Database::runQuery("SELECT ing.id, ing.name, unit.name AS units F
 </form>
 
 <script>
+    var numIngredients = 1;
+    
     $("#addIngredient").click(function() {
-        $("#firstIng").clone().insertBefore("#addIngWrapper");
+        
+        $("#firstIng").clone().insertBefore("#addIngWrapper")
+                .children("select").attr('name', 'ingredient' + numIngredients++);
     });
 </script>

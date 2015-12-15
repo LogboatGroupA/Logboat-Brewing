@@ -11,6 +11,9 @@ if(!isLoggedIn()) {
 $name = htmlspecialchars($_POST['name']);
 $beerTypeId = htmlspecialchars($_POST['beerTypeId']);
 $createdBy = htmlspecialchars($_SESSION['userId']);
+$ingredients = getArrayForMultiInput("ingredient");
+
+fail($ingredients);
 
 $query = 'INSERT INTO beer VALUES (DEFAULT, ?, ?, ?)';
 
