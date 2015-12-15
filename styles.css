@@ -110,3 +110,13 @@ a:hover, .navbar-default .navbar-nav>li>a:hover {
 .sub-header {
     margin: 12px 0 0 0;
 }
+
+.input-multi-container {
+    margin-bottom: 6px;
+}
+
+.input-multi {
+    float: left;
+    width: auto;
+    margin-right: 6px;
+}
