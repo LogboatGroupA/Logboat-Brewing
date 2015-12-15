@@ -13,7 +13,22 @@ body {
     padding: 12px;
 }
 
-.navbar-nav {
+#homeLogoLink {
+    padding: 6px;
+    margin-left: 0;
+}
+
+#homeLogo {
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+#homeLogo:after {
+    background: blue;
+}
+
+.navbar-nav, .navbar-nav>li, .navbar-nav>li>a {
     height: 50px;
 }
 
