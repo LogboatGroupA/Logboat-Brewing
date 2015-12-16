@@ -40,7 +40,7 @@ $ingredients = Database::runQuery("SELECT ing.id, ing.name, unit.name AS units F
                 }
                 ?>
             </select>
-            <input type="number" class="form-control input-multi" name="quantity" step=".01" value="0.00" min="0.01" max="20.00">
+            <input type="number" class="form-control input-multi" name="quantity0" step=".01" value="0.00" min="0.01" max="20.00">
         </div>
         <div id="addIngWrapper" class="input-multi-add">
             <button id="addIngredient" type="button" class="btn btn-xs btn-primary">Add new</button>
@@ -99,7 +99,11 @@ $ingredients = Database::runQuery("SELECT ing.id, ing.name, unit.name AS units F
     //Adds a new ingredient input to the recipe form (indefinite number)
     $("#addIngredient").click(function() {
         
-        $("#firstIng").clone().insertBefore("#addIngWrapper")
-                .children("select").attr('name', 'ingredient' + numIngredients++);
+        var firstIng = $("#firstIng").clone()
+                .attr('id', '').insertBefore("#addIngWrapper");
+        
+        firstIng.children("select").attr('name', 'ingredient' + numIngredients);
+        
+        firstIng.children("input").attr('name', 'quantity' + numIngredients++);
     });
 </script>
