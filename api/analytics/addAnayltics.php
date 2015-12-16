@@ -16,7 +16,7 @@ try {
                                     "userId" => $_SESSION['userId'])
                                 );
     if($data) {
-        success();
+        header("Location: " . getBaseUrl() . "/analytics/showAnalytics.php?brewId=" . (int) $_POST['brewId']);
     } else {
         fail("Error in api/analytics/addAnalytics.php: $data not valid");
     }
