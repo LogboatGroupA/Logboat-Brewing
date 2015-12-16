@@ -64,6 +64,14 @@ function randomString($length = 6) {
     return $str;
 }
 
+/**
+ * When there is an empty set, the query returns "numAffected: 0", so
+ * this function just changes it to an empty array.
+ */
+function enforceEmptyArray($array) {
+    return array_key_exists("numAffected", $array) ? array() : $array;
+}
+
 class Database {
     protected static $dbname = "logboatDB";
     protected static $username = "be1dbd64a86c89";

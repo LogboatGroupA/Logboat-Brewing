@@ -18,17 +18,22 @@ $user = $data[0]; // Grab the first result (should only be one)
         <script>
             $(document).ready(function () {
                 $.getJSON("<?= getBaseUrl(); ?>api/brew/getBrewsForUser.php",
-                        {"userId": <?= $user['id']; ?>}, function (data) {
-                    if (!data.success) {
-                        console.error(data.error);
+                        {"userId": <?= $user['id']; ?>}, function (jsonData) {
+                    if (!jsonData.success) {
+                        console.log(jsonData);
+                        console.error(jsonData.error);
                         //TODO: handle error in UI
                         return;
                     }
 
                     var brewList = $("#brewList");
                     brewList.empty();
+                    
+                    if(jsonData.result.length === 0) {
+                        brewList.html("This user hasn't scheduled any brews.");
+                    }
 
-                    data.result.forEach(function (brew) {
+                    jsonData.result.forEach(function (brew) {
                         var brewCell = $("<div></div>");
                         brewCell.addClass("cell-basic clearfix");
                         
@@ -84,6 +89,10 @@ $user = $data[0]; // Grab the first result (should only be one)
 
                     var beerList = $("#beerList");
                     beerList.empty();
+                    
+                    if(data.result.length === 0) {
+                        beerList.html("This user hasn't created any beer recipes.");
+                    }
 
                     data.result.forEach(function (beer) {
                         var brewCell = $("<div></div>");
@@ -111,6 +120,10 @@ $user = $data[0]; // Grab the first result (should only be one)
 
                     var kegOrderList = $("#kegOrderList");
                     kegOrderList.empty();
+                    
+                    if(data.result.length === 0) {
+                        kegOrderList.html("This user hasn't scheduled any keg orders.");
+                    }
 
                     data.result.forEach(function (KegOrder) {
                         var kegOrderCell = $("<div></div>");

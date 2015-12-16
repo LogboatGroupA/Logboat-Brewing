@@ -56,7 +56,7 @@ if(($data = Database::runQuery($query, $bind_params))) {
 
     $data = Database::runQuery($ingQuery, $bind_params);
             
-    $result['ingredients'] = array_key_exists("numAffected", $data) ? "error" : $data;
+    $result['ingredients'] = enforceEmptyArray($data);
     success($result);
 }
       

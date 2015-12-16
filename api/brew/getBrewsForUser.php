@@ -24,8 +24,7 @@ $query =
 
 $bind_params = array("userId" => $userId);
 
-if(($data = Database::runQuery($query, $bind_params))) {
-    success($data);
-}
+$data = Database::runQuery($query, $bind_params);
+$data = enforceEmptyArray($data);
 
-fail("Error in brew/getBrewsForUser.php");
+success($data);
