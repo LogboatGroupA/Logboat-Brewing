@@ -17,17 +17,10 @@ $query = 'INSERT INTO ingredient VALUES (DEFAULT, ?, ?, ?, ?, ?)';
 
 $stmt = $link->prepare($query);
 
-$stmt->bind_param("ssdid", $name, $supplier, $quantity, $unitId, $lowValue);
+$stmt->bind_param("ssdid", $name, $supplier, $quantity, $lowValue, $unitId);
 
 if($stmt->execute()) {
     success();
 } else {
     fail($stmt->error);
 }
-    //     success();
-    // } else {
-    //     fail("Error creating ingredient");
-    // }
-
-
-// fail("Error creating ingredient");
