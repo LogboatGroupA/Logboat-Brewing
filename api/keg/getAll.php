@@ -13,7 +13,7 @@ $query =
         beer.name as beerName,
         customer.firstName as customerFirstName,
         customer.lastName as customerLastName,
-        beer.id
+        beer.id as beerId
     FROM keg
     LEFT OUTER JOIN 
         (SELECT * FROM kegOrder WHERE returned = 0) AS kegOrder

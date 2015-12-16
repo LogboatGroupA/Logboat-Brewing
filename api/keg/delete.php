@@ -7,7 +7,7 @@ if(!isLoggedIn()) {
     fail("Only logged in users can delete kegs");
 }
 
-$id = htmlspecialchars($_POST['kegId']);
+$id = (int) $_POST['kegId'];
 
 $query = 'DELETE FROM keg WHERE id = ? LIMIT 1';
 

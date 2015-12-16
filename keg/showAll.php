@@ -18,11 +18,11 @@ if(!isLoggedIn()) {
                 $.getJSON("../api/keg/getAll.php", function(data) {
                     $("#showAllLoading").fadeOut(400, function() {
                         for(var i = 0, len = data.result.length; i < len; i++) {
-                            $("#getAllTable").append("<tr data-beerId = '"+ data.result[i].beerId + "'  data-kegId='" + data.result[i].kegId + "' data-customerId='" + data.result[i].customerId +"'><td>" +
+                            $("#getAllTable").append("<tr data-brewId = '"+ data.result[i].brewId + "'  data-kegId='" + data.result[i].kegId + "' data-customerId='" + data.result[i].customerId +"' data-kegOrderId='" + data.result[i].kegOrderId + "'><td>" +
                                                      data.result[i].serialNum +
                                                      "</td><td>" +
                                                      (data.result[i].beerName != null
-                                                        ? data.result[i].beerName  
+                                                        ? (data.result[i].beerName + " - " + data.result[i].brewId)  
                                                         : "Empty") +
                                                      "</td><td>" +
                                                      (data.result[i].customerFirstName != null && data.result[i].customerLastName != null 
@@ -36,7 +36,7 @@ if(!isLoggedIn()) {
                                 console.log("Clicked");
                                 $("#updateModal .modal-body").html("<div style='text-align: center;'><i class='fa fa-beer fa-spin fa-5x text-center'></i></div>");
                                 $("#updateModal").modal('toggle');
-                                $.get("updateModal.php", {"kegId": $(this).attr("data-kegId"), "customerId" : $(this).attr("data-customerId"), "beerId": $(this).attr("data-beerId")}, function(data) {
+                                $.get("updateModal.php", {"kegId": $(this).attr("data-kegId"), "customerId" : $(this).attr("data-customerId"), "brewId": $(this).attr("data-brewId"), 'kegOrderId' : $(this).attr("data-kegOrderId")}, function(data) {
                                     $("#updateModal .modal-body div").fadeOut(400, function() {
                                         $("#updateModal .modal-body").hide().html(data).slideDown("slow");
                                     });
