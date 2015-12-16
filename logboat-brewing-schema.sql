@@ -21,17 +21,16 @@ CREATE TABLE user (
     username varchar(15) NOT NULL UNIQUE,
     password varchar(256) NOT NULL,
     isAdmin boolean NOT NULL DEFAULT false,
-    created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    passwordExpDate date DEFAULT NULL
+    created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=INNODB;
 
 /* Remove these for production application? These are here for our convenience right now. 
    Not sure how else to seed an admin account. */
 INSERT INTO user VALUES
-    (DEFAULT, 'admin', '$2y$10$N5FtjNxtYAxB0WuoXHU.eOVVGeL3.kqtuSFKKnOpbEZ6vdlph.4Py', true, DEFAULT, DEFAULT),
-    (DEFAULT, 'test', '$2y$10$cDYAjrH6f/Q9SMjd5/EiNOxWzG1M/3BbNQO3NNU/0WBWzs8IxpAoe', false, DEFAULT, DEFAULT);
+    (DEFAULT, 'admin', '$2y$10$N5FtjNxtYAxB0WuoXHU.eOVVGeL3.kqtuSFKKnOpbEZ6vdlph.4Py', true, DEFAULT),
+    (DEFAULT, 'test', '$2y$10$cDYAjrH6f/Q9SMjd5/EiNOxWzG1M/3BbNQO3NNU/0WBWzs8IxpAoe', false, DEFAULT);
 
-CREATE VIEW userSafe AS SELECT id, username, isAdmin, created, passwordExpDate FROM user;
+CREATE VIEW userSafe AS SELECT id, username, isAdmin, created FROM user;
 
 /*
  * Unit
@@ -46,16 +45,6 @@ INSERT INTO unit VALUES
     (DEFAULT, 'oz'),
     (DEFAULT, 'lbs');
 
-
-/*
- * FermentationType
- */
-CREATE TABLE fermentationType (
-    id smallint NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name varchar(20) NOT NULL UNIQUE
-) ENGINE=INNODB;
-
-
 /*
  * Ingredient
  */
@@ -64,17 +53,18 @@ CREATE TABLE ingredient (
     name varchar(30) NOT NULL,
     supplier varchar(30) DEFAULT NULL,
     quantity float NOT NULL DEFAULT 0,
+    lowValue float NOT NULL DEFAULT 0,
     unitId smallint NOT NULL,
     FOREIGN KEY (unitId) REFERENCES unit (id)
 ) ENGINE=INNODB;
 
 INSERT INTO ingredient VALUES
-    (DEFAULT, 'Lemondrop Hop Pellets', 'Northern Brewer', 55, 11),
-    (DEFAULT, 'Rahr 2-row pale', 'Rahr', 50, 21),
-    (DEFAULT, 'Briess Caramel 6OL', 'Briess', 10, 21),
-    (DEFAULT, 'Briess Caramel 8OL', 'Briess', 8.6, 21),
-    (DEFAULT, 'Fawecett Pale Chocolate', 'Fawcett Pale', 10.2, 21),
-    (DEFAULT, 'English Black Malt', 'Logboat', 3.3, 21);
+    (DEFAULT, 'Lemondrop Hop Pellets', 'Northern Brewer', 55, 2, 1),
+    (DEFAULT, 'Rahr 2-row pale', 'Rahr', 50, 500, 11),
+    (DEFAULT, 'Briess Caramel 6OL', 'Briess', 10, 8, 11),
+    (DEFAULT, 'Briess Caramel 8OL', 'Briess', 8.6, 2.5, 1),
+    (DEFAULT, 'Fawecett Pale Chocolate', 'Fawcett Pale', 10.2, 2.6, 1),
+    (DEFAULT, 'English Black Malt', 'Logboat', 3.3, 2.5, 1);
 
 
 /*
@@ -103,9 +93,10 @@ CREATE TABLE beer (
 ) ENGINE=INNODB;
 
 INSERT INTO beer VALUES
-    (DEFAULT, 'Caribou Slobber Brown Ale', 1, 1),
+    (DEFAULT, 'Caribou Slobber Brown Ale', 1, 21),
     (DEFAULT, 'Squirrel Nutkin Ale', 1, 21),
-    (DEFAULT, 'Janet''s Brown Ale', 1, 21);
+    (DEFAULT, 'Janet''s Brown Ale', 1, 21),
+    (DEFAULT, 'Shiphead', 1, 11);
 
 
 /*
@@ -121,11 +112,15 @@ CREATE TABLE beerUsesIngredient (
 ) ENGINE=INNODB;
 
 INSERT INTO beerUsesIngredient VALUES
-    (DEFAULT, 1, 11, 9),
-    (DEFAULT, 1, 21, .75),
-    (DEFAULT, 1, 31, .5),
-    (DEFAULT, 1, 41, .25),
-    (DEFAULT, 1, 51, .125);
+    (DEFAULT, 1, 11, 9.0),
+    (DEFAULT, 1, 21, 4.5),
+    (DEFAULT, 1, 41, 0.05),
+    (DEFAULT, 11, 21, .75),
+    (DEFAULT, 11, 31, .5),
+    (DEFAULT, 21, 41, .25),
+    (DEFAULT, 21, 11, 6.0),
+    (DEFAULT, 31, 41, 0.10);
+
 
 /**
  * Brew
@@ -145,24 +140,56 @@ INSERT INTO brew VALUES
     (DEFAULT, '2015-12-02 10:00:00', '2015-12-18 10:00:00', 450, 1, 1),
     (DEFAULT, '2016-01-05 08:00:00', '2016-02-04 14:30:00', 565, 11, 1),
     (DEFAULT, '2015-12-09 09:00:00', '2015-12-15 11:00:00', 675, 11, 1),
-    (DEFAULT, '2015-12-21 10:00:00', '2015-12-25 16:15:00', 888, 1, 1);
+    (DEFAULT, '2015-12-21 10:00:00', '2015-12-25 16:15:00', 888, 1, 1),
+    (DEFAULT, '2015-12-08 00:00:00', '2015-12-12 09:00:00', 600, 21, 1);
+
+
+/*
+ * FermentationType
+ */
+CREATE TABLE fermentationType (
+    id smallint NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name varchar(20) NOT NULL UNIQUE
+) ENGINE=INNODB;
+
+INSERT INTO fermentationType VALUES
+    (DEFAULT, 'Gravity'),
+    (DEFAULT, 'pH');
 
 
 /*
  * Fermentation
  */
 CREATE TABLE fermentation (
-    id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    id int NOT NULL AUTO_INCREMENT,
+    value double NOT NULL DEFAULT 0,
+    dateTime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     typeId smallint NOT NULL,
-    unitId smallint NOT NULL,
     brewId int NOT NULL,
     userId smallint NOT NULL,
     FOREIGN KEY (typeId) REFERENCES fermentationType (id),
-    FOREIGN KEY (unitId) REFERENCES unit (id),
     FOREIGN KEY (brewId) REFERENCES brew (id),
-    FOREIGN KEY (userId) REFERENCES user (id)
+    FOREIGN KEY (userId) REFERENCES user (id),
+    PRIMARY KEY (id, dateTime)
 ) ENGINE=INNODB;
+
+INSERT INTO fermentation VALUES
+    (DEFAULT, 13,   '2015-12-13 05:08:00', 1,   1, 1),
+    (DEFAULT, 13,   '2015-12-13 05:08:00', 1,   1, 1),
+    (DEFAULT, 1.08, '2015-12-13 05:08:00', 11,  1, 1),
+    (DEFAULT, 1.89, '2015-12-14 13:00:00', 1,   1, 1),
+    (DEFAULT, 9,    '2015-12-16 21:04:00', 1,   1, 1),
+    (DEFAULT, 11,   '2015-12-16 08:04:00', 1,   1, 1),
+    (DEFAULT, 1.2,  '2015-12-18 00:00:00', 11,  1, 1),
+    (DEFAULT, 1.22, '2015-12-18 12:00:00', 11,  1, 1),
+    (DEFAULT, 11,   '2015-12-18 12:00:00', 1,   1, 1),
+    (DEFAULT, 12,   '2015-12-12 11:00:00', 1,   1, 1),
+    (DEFAULT, 12,   '2015-12-12 11:00:00', 1,   1, 1),
+    (DEFAULT, 1.22, '2015-12-19 13:00:00', 11,  1, 1),
+    (DEFAULT, 13,   '2015-12-22 00:00:00', 1,  31, 1),
+    (DEFAULT, 8,    '2015-12-23 12:00:00', 1,  31, 1),
+    (DEFAULT, 1.08, '2015-12-22 09:00:00', 11, 31, 1), 
+    (DEFAULT, 1.11, '2015-12-23 12:00:00', 11, 31, 1);
 
 
 /**
@@ -181,8 +208,9 @@ CREATE TABLE customer (
 ) ENGINE=INNODB;
 
 INSERT INTO customer VALUES
-    (DEFAULT, 'Seth', 'vonSeggern', '555-555-5555', 'seth@email.com', 'Mizzou', 'Columbia', 'MO', '65201'),
-    (DEFAULT, 'Jacob', 'Muchow', '123-456-7890', 'jacob@email.com', 'Mizzou', 'Colubmia', 'MO', '65203');
+    (DEFAULT, 'Marjorie', 'Patterson', '717-965-7202', 'MarjorieJPatterson@teleworm.us', '2935 Simpson Avenue', 'Carlisle', 'PA', '17013'),
+    (DEFAULT, 'Bill', 'Snider', '586-228-4053', 'BillVSnider@rhyta.com', '3256 Cherry Ridge Drive', 'Mount Clemens', 'MI', '48044');
+
 
 /**
  * Keg
