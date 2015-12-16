@@ -39,7 +39,7 @@ $ingredients = Database::runQuery("SELECT ing.id, ing.name, unit.name AS units F
                 }
                 ?>
             </select>
-            <input type="number" class="form-control input-multi" name="quantity" step=".01" value="0" min="0.01" max="20">
+            <input type="number" class="form-control input-multi" name="quantity" step=".01" value="0.00" min="0.01" max="20.00">
         </div>
         <div id="addIngWrapper">
             <button id="addIngredient" type="button" class="btn btn-xs btn-primary">Add new</button>

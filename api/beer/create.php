@@ -11,17 +11,29 @@ if(!isLoggedIn()) {
 $name = htmlspecialchars($_POST['name']);
 $beerTypeId = htmlspecialchars($_POST['beerTypeId']);
 $createdBy = htmlspecialchars($_SESSION['userId']);
-$ingredients = getArrayForMultiInput("ingredient");
-
-fail($ingredients);
+$ingredients = getArrayForMultiInputKey("ingredient");
 
 $query = 'INSERT INTO beer VALUES (DEFAULT, ?, ?, ?)';
-
 $stmt = $link->prepare($query);
 
 $stmt->bind_param("sdd", $name, $createdBy, $beerTypeId);
 
 if($stmt->execute()) {
+   
+    $beerId = $link->insert_id;
+    $quantity = 0;
+    
+    $query = 'INSERT INTO beerUsesIngredient VALUES (DEFAULT, ?, ?, ?)';
+    $stmt = $link->prepare($query);
+    
+    $stmt->bind_param("ddd", $beerId, $ingredient, $quantity);
+    
+    foreach($ingredients as $ingredient) {
+        if(!$stmt->execute()) {
+            fail("Error adding ingredients in beer/create.php");
+        }
+    }
+    
     success();
 }
 
