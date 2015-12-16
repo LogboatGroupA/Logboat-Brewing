@@ -17,23 +17,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 
 <!--Table Sorter-->
-<style>
-    #getAllTable thead tr th.tablesorter-headerDesc div:hover:after,
-    #getAllTable thead tr th.tablesorter-headerAsc div:hover:after,
-    #getAllTable thead tr th.tablesorter-headerUnSorted div:hover:after {
-      font-family: FontAwesome;
-    }
-    #getAllTable thead tr th.tablesorter-headerUnSorted div:hover:after {
-      content: "\00a0\f0dc";
-    }
-    #getAllTable thead tr th.tablesorter-headerDesc div:hover:after {
-      content: "\00a0\f0de";
-    }
-    #getAllTable thead tr th.tablesorter-headerAsc div:hover:after {
-      content: "\00a0\f0dd";
-    }
-</style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/jquery.tablesorter.min.js"></script>
 
 <!--Datejs-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
+
+<script>        
+    function showError(error) {
+        $("#errorMessage")
+                .html(error)
+                .slideDown("fast")
+                .delay(10000)
+                .slideUp(1000);
+    }
+</script>

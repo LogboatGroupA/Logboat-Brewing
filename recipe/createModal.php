@@ -6,12 +6,6 @@ $ingredients = Database::runQuery("SELECT ing.id, ing.name, unit.name AS units F
 
 ?>
 
-<style>
-    #addIngWrapper {
-        margin-top: 12px;
-    }
-</style>
-
 <form id="createBeerRecipeForm" method="post" action="<?php echo getBaseUrl(); ?>api/beer/create.php">
     <div id="errorMessage" class="alert alert-danger text-center" role="alert" style="display: none;"></div>
     <div class="form-group">
@@ -19,8 +13,11 @@ $ingredients = Database::runQuery("SELECT ing.id, ing.name, unit.name AS units F
         <input type="text" class="form-control" id="name" name="name" maxlength="50" required>
     </div>
     <div class="form-group">
-        <label for="beerTypeId">Beer Type</label>
-        <select name="beerTypeId" class="form-control">
+        <div class="clearfix">
+            <label for="beerTypeId" class="left">Beer Type</label>
+            <button id="newTypeButton" type="button" class="btn btn-xs btn-default right">+</button>
+        </div>
+        <select id="beerType" name="beerTypeId" class="form-control">
             <?php 
             $beerTypes = Database::runQuery("SELECT * FROM beerType ORDER BY name");
             foreach($beerTypes as $beerType) {
@@ -28,6 +25,10 @@ $ingredients = Database::runQuery("SELECT ing.id, ing.name, unit.name AS units F
             }
             ?>
         </select>
+        <div id="newTypeWrapper" class="input-multi-container clearfix" hidden="true">
+            <input id="newTypeName" type="text" class="form-control input-multi" maxlength="50">
+            <button id="addNewType" type="button" class="btn btn-xs btn-default input-multi-btn-xs">+</button>
+        </div>
     </div>
     <div class="form-group">
         <label for="ingredients">Ingredients</label>
@@ -41,7 +42,7 @@ $ingredients = Database::runQuery("SELECT ing.id, ing.name, unit.name AS units F
             </select>
             <input type="number" class="form-control input-multi" name="quantity" step=".01" value="0.00" min="0.01" max="20.00">
         </div>
-        <div id="addIngWrapper">
+        <div id="addIngWrapper" class="input-multi-add">
             <button id="addIngredient" type="button" class="btn btn-xs btn-primary">Add new</button>
         </div>
     </div>
@@ -50,6 +51,52 @@ $ingredients = Database::runQuery("SELECT ing.id, ing.name, unit.name AS units F
 <script>
     var numIngredients = 1;
     
+    //Clicked when user wants to add new beer type
+    $("#newTypeButton").click(function() {
+        var newButton = $(this);
+        
+        if(newButton.html() === "+") {
+            $("#beerType").hide();
+            $("#newTypeWrapper").show();
+            newButton.html("-");
+            
+        } else {
+            $("#beerType").show();
+            $("#newTypeWrapper").hide();
+            newButton.html("+");
+        }
+        
+        newButton.blur();
+    });
+    
+    //Clicked when user wants save new beer type
+    $("#addNewType").click(function() {
+        var name = $("#newTypeName").val();
+        
+        if(name.length === 0) {
+            showError("Please provide a name for the new beer type");
+            return;
+        }
+        
+        $.post("<?= getBaseUrl(); ?>api/beer/createType.php", {"name": name }, function(jsonData) {
+            if(!jsonData.success) {
+                console.log(jsonData);
+                showError(jsonData.error);
+                return;
+            }
+            
+            var option = $("<option></option>");
+            option.val(jsonData.result.id);
+            option.html(name);
+            
+            $("#beerType").append(option);
+            $("#beerType").val(option.val());
+            
+            $("#newTypeButton").click();
+        });
+    });
+    
+    //Adds a new ingredient input to the recipe form (indefinite number)
     $("#addIngredient").click(function() {
         
         $("#firstIng").clone().insertBefore("#addIngWrapper")

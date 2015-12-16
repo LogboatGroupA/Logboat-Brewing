@@ -1,3 +1,6 @@
+/**
+ * Body
+ */
 body {
     background: #eee url(http://static1.squarespace.com/static/54f0cacce4b094783bb94952/t/55678847e4b0f29daa633303/1432848455862/Logboat+Background.jpg) repeat;
 }
@@ -13,6 +16,9 @@ body {
     padding: 12px;
 }
 
+/**
+ * Navbar
+ */
 #homeLogoLink {
     padding: 6px;
     margin-left: 0;
@@ -50,6 +56,27 @@ a:hover, .navbar-default .navbar-nav>li>a:hover {
     text-decoration: none;
 }
 
+/**
+ * Table Sorter
+ */
+#getAllTable thead tr th.tablesorter-headerDesc div:hover:after,
+#getAllTable thead tr th.tablesorter-headerAsc div:hover:after,
+#getAllTable thead tr th.tablesorter-headerUnSorted div:hover:after {
+  font-family: FontAwesome;
+}
+#getAllTable thead tr th.tablesorter-headerUnSorted div:hover:after {
+  content: "\00a0\f0dc";
+}
+#getAllTable thead tr th.tablesorter-headerDesc div:hover:after {
+  content: "\00a0\f0de";
+}
+#getAllTable thead tr th.tablesorter-headerAsc div:hover:after {
+  content: "\00a0\f0dd";
+}
+
+/**
+ * General
+ */
 .cell-basic {
     padding: 20px;
     background-color: #eee;
@@ -111,6 +138,9 @@ a:hover, .navbar-default .navbar-nav>li>a:hover {
     margin: 12px 0 0 0;
 }
 
+/**
+ * Multiple input (indefinite number of inputs)
+ */
 .input-multi-container {
     margin-bottom: 6px;
 }
@@ -119,4 +149,12 @@ a:hover, .navbar-default .navbar-nav>li>a:hover {
     float: left;
     width: auto;
     margin-right: 6px;
+}
+
+.input-multi-add {
+    margin-top: 12px;
+}
+
+.input-multi-btn-xs {
+    margin-top: 6px;
 }

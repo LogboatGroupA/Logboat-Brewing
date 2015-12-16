@@ -115,14 +115,6 @@ if(!isLoggedIn()) {
                         });
                     }
                 });
-                
-                function showError(error) {
-                    $("#errorMessage")
-                            .html(error)
-                            .slideDown("fast")
-                            .delay(10000)
-                            .slideUp(1000);
-                }
             });
         </script>
     </head>
