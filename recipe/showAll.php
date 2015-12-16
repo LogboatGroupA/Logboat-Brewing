@@ -33,11 +33,19 @@ if(!isLoggedIn()) {
                         //Set all the rows to open modal
                         $("#getAllTable tbody tr").each(function() {
                             $(this).click(function() {
-                                $("#updateModal .modal-body").html("<div style='text-align: center;'><i class='fa fa-beer fa-spin fa-5x text-center'></i></div>");
+                                /*$("#updateModal .modal-body").html("<div style='text-align: center;'><i class='fa fa-beer fa-spin fa-5x text-center'></i></div>");
                                 $("#updateModal").modal('toggle');
                                 $.get("updateModal.php", {"beerId": $(this).attr("data-beerId")}, function(data) {
                                     $("#updateModal .modal-body div").fadeOut(400, function() {
                                         $("#updateModal .modal-body").hide().html(data).slideDown("slow");
+                                    });
+                                });*/
+    
+                                $("#detailModal .modal-body").html("<div style='text-align: center;'><i class='fa fa-beer fa-spin fa-5x text-center'></i></div>");
+                                $("#detailModal").modal('toggle');
+                                $.get("detailModal.php", {"beerId": $(this).attr("data-beerId")}, function(data) {
+                                    $("#detailModal .modal-body div").fadeOut(400, function() {
+                                        $("#detailModal .modal-body").hide().html(data).slideDown("slow");
                                     });
                                 });
                             });
@@ -163,6 +171,23 @@ if(!isLoggedIn()) {
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close Without Saving</button>
                         <button type="button" class="modalCreate btn btn-primary">Create Recipe</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <!--Modal Used for beer detail-->
+        <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="modalLabel">Beer Recipe Information</h4>
+                    </div>
+                    <div class="modal-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
