@@ -12,6 +12,7 @@
 
 <!-- Logboat CSS -->
 <link rel="stylesheet" href="<?= getBaseUrl(); ?>styles.css?v=0.3">
+<link rel="icon" type="image/png" href="http://static1.squarespace.com/static/54f0cacce4b094783bb94952/t/55677e8ce4b0abaf8a0f4182/1449002915219/?format=1500w" sizes="128x128" />
 
 <!--- Chart JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
