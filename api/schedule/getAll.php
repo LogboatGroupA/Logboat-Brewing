@@ -43,7 +43,7 @@ foreach($events as $event) {
 														'start'     => $event['brewStart'],
 														'end'       => $event['brewEnd'],
 														'editable'  => ($event['userid'] == $_SESSION['userId'] ? true : false),
-														'color'			=> ($event['userid'] == $_SESSION['userId'] ? "#337ab7" : "#7BA9D0"));
+														'color'			=> ($event['userid'] == $_SESSION['userId'] ? "#337AB7" : "#7BA9D0"));
 }
 
 echo json_encode($returnJSON);
