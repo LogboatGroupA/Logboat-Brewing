@@ -33,7 +33,7 @@
 
                 <?php if(isUserAdmin()) { ?>
 
-                <li><a href="<?= getBaseUrl(); ?>user/users.php">Users</a></li>
+                <li><a href="<?= getBaseUrl(); ?>user/showAll.php">Users</a></li>
 
                 <li style="padding:15px">|</li>
 

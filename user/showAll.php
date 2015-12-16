@@ -68,17 +68,14 @@
             
             function deleteUser(id, username) {
                 if(confirm("Are you sure you want to delete " + username + " from the database?")) {
-                    $.post("<?= getBaseUrl(); ?>api/user/delete.php", { id: id }, function(data) {
-                        /*var jsonData = $.parseJSON(data);
+                    $.post("<?= getBaseUrl(); ?>api/user/delete.php", { id: id }, function(jsonData) {
                         if(!jsonData.success) {
                             console.error(jsonData.error);
                             //Handle error in UI
                             return;
-                        }*/
+                        }
                         
-                        console.log(data);
-                        
-                        updateUserList();
+                        window.location.reload();
                     });
                 }
             }
