@@ -19,9 +19,7 @@ if(($stmt = $link->prepare($query))) {
     $stmt->bind_param("ss", $username, $hashedPassword);
     
     if($stmt->execute()) {
-        $result = array();
-        $result['tempPass'] = $tempPass;
-        success($result);
+        success($tempPass);
     }
 }
 

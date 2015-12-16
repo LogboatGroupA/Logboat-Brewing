@@ -13,8 +13,7 @@
             $("#createForm").submit(function(e) {
                 e.preventDefault();
                 
-                $.post("../api/user/create.php", $("#createForm").serialize(), function(data) {
-                    var jsonData = $.parseJSON(data);
+                $.post("../api/user/create.php", $("#createForm").serialize(), function(jsonData) {
                     
                     if(jsonData.success === false){
                         $("#errorMessage")
@@ -25,7 +24,7 @@
                         return;
                     }
                     
-                    var successText = "User created successfully. This is their temporary password: " + jsonData.result.tempPass;
+                    var successText = "User created successfully. This is their temporary password: " + jsonData.result;
                     
                     $("#successMessage")
                             .html(successText)
