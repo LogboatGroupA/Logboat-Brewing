@@ -13,7 +13,22 @@ body {
     padding: 12px;
 }
 
-.navbar-nav {
+#homeLogoLink {
+    padding: 6px;
+    margin-left: 0;
+}
+
+#homeLogo {
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+#homeLogo:after {
+    background: blue;
+}
+
+.navbar-nav, .navbar-nav>li, .navbar-nav>li>a {
     height: 50px;
 }
 
@@ -94,4 +109,14 @@ a:hover, .navbar-default .navbar-nav>li>a:hover {
 
 .sub-header {
     margin: 12px 0 0 0;
+}
+
+.input-multi-container {
+    margin-bottom: 6px;
+}
+
+.input-multi {
+    float: left;
+    width: auto;
+    margin-right: 6px;
 }

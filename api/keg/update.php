@@ -7,14 +7,14 @@ if(!isLoggedIn()) {
     fail("Only logged in users can update kegs");
 }
 
-$id = htmlspecialchars($_POST['kegId']);
-$serialNum = htmlspecialchars($_POST['serialNum']);
+$id = htmlspecialchars($_POST['beerId']);
+$customerId = htmlspecialchars($_POST['customerId']);
 
-$query = 'UPDATE keg SET serialNum=? WHERE id=?';
+$query = 'UPDATE kegorder SET beerId=? customerId= ? WHERE id=?';
 
 $stmt = $link->prepare($query);
     
-$stmt->bind_param("sd", $serialNum, $id);
+$stmt->bind_param("", $serialNum, $id);
 
 if($stmt->execute()) {
     success();
