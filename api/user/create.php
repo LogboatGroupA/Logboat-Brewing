@@ -9,7 +9,7 @@ if(!isUserAdmin()) {
 
 $username = htmlspecialchars($_POST['username']);
 
-$query = 'INSERT INTO user VALUES (DEFAULT, ?, ?, DEFAULT, DEFAULT)';
+$query = 'INSERT INTO user (id, username, password, isAdmin, created) VALUES (DEFAULT, ?, ?, DEFAULT, DEFAULT)';
 
 if(($stmt = $link->prepare($query))) {
     
