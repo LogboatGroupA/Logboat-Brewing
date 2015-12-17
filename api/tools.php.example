@@ -25,12 +25,7 @@ function isUserAdmin() {
 }
 
 function getBaseUrl() {
-    //return "https://cs3380-jam9rd.cloudapp.net/LogboatBrewing/";    //Jacob
-    //return "https://logboat-brewing-percyodi.c9.io/Logboat-Brewing/"; //Pearse
-    //return "https://cs3380-dpshd7.cloudapp.net/Logboat-Brewing/"; //Devun
-    //Seth
-    //Peter
-    return "https://logboat.cloudapp.net/";                       //Master VM
+    return "YOUR BASE URL HERE";
 }
 
 function getArrayForMultiInputKey($key) {
@@ -73,10 +68,10 @@ function enforceEmptyArray($array) {
 }
 
 class Database {
-    protected static $dbname = "logboatDB";
-    protected static $username = "be1dbd64a86c89";
-    protected static $password = "3b83625d";
-    protected static $host = "us-cdbr-azure-central-a.cloudapp.net";
+    protected static $dbname = "YOUR DB NAME HERE";
+    protected static $username = "DB USERNAME HERE";
+    protected static $password = "DB PASSWORD HERE";
+    protected static $host = "DB HOST HERE";
     protected static $port = 3306;
     
     public static function getConn() {

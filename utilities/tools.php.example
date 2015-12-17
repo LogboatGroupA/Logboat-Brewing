@@ -5,10 +5,10 @@ function say($text) {
 }
 
 class Database {
-    protected static $dbname = "logboatDB";
-    protected static $username = "be1dbd64a86c89";
-    protected static $password = "3b83625d";
-    protected static $host = "us-cdbr-azure-central-a.cloudapp.net";
+    protected static $dbname = "YOUR DB NAME HERE";
+    protected static $username = "DB USERNAME HERE";
+    protected static $password = "DB PASSWORD HERE";
+    protected static $host = "DB HOST HERE";
     protected static $port = 3306;
     
     public static function getConn() {
