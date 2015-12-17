@@ -44,7 +44,6 @@ require '../utilities/tools.php';
         <?php require '../navbar.php'; ?>
         <div class="container">
             <div class="row">
-                <a href="<?php echo getBaseUrl(); ?>ingredient/create.php" class="callCreateModal">Add a New Ingredient</a>
                 <table id="getAllTable" class="table table-hover">
                     <thead>
                         <th>Beer Name</th><th>Brew Id</th><th>Starts</th><th>Ends</th><th>Quantity</th>

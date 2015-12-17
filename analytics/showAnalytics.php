@@ -40,7 +40,7 @@ if(!isLoggedIn()) {
         </div>
 
         <div class="form-group">
-          <label for="fermType">Beer</label>
+          <label for="fermType">Fermentation Type</label>
             <select name="fermType" class="form-control">
                 <?php 
                 $types = Database::runQuery("SELECT * FROM fermentationType");
