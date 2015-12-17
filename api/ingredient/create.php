@@ -12,7 +12,7 @@ $lowValue= $_POST['lowValue'];
 //TODO: handle cases for empty supplier / quantity
 
 /* This is the old query. Current schema doesn't support $unitId */
-$query = 'INSERT INTO ingredient VALUES (DEFAULT, ?, ?, ?, ?, ?)';
+$query = 'INSERT INTO ingredient (id, name, supplier, quantity, lowValue, unitId) VALUES (DEFAULT, ?, ?, ?, ?, ?)';
 
 
 $stmt = $link->prepare($query);
