@@ -1,0 +1,254 @@
+SET FOREIGN_KEY_CHECKS=0;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+
+DROP TABLE IF EXISTS `beer`;
+CREATE TABLE `beer` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `createdBy` bigint(20) UNSIGNED NOT NULL,
+  `beerTypeId` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `beertype`;
+CREATE TABLE `beertype` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `beerusesingredient`;
+CREATE TABLE `beerusesingredient` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `beerId` bigint(20) UNSIGNED NOT NULL,
+  `ingredientId` bigint(20) UNSIGNED NOT NULL,
+  `quantity` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `brew`;
+CREATE TABLE `brew` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `brewStart` datetime NOT NULL,
+  `brewEnd` datetime NOT NULL,
+  `quantity` float NOT NULL,
+  `beerId` bigint(20) UNSIGNED NOT NULL,
+  `userId` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `customer`;
+CREATE TABLE `customer` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `firstName` varchar(20) NOT NULL,
+  `lastName` varchar(20) NOT NULL,
+  `phoneNumber` varchar(12) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `address` varchar(30) DEFAULT NULL,
+  `city` varchar(20) DEFAULT NULL,
+  `state` varchar(2) DEFAULT NULL,
+  `zipCode` varchar(5) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `fermentation`;
+CREATE TABLE `fermentation` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `value` double NOT NULL DEFAULT '0',
+  `dateTime` datetime NOT NULL,
+  `typeId` bigint(20) UNSIGNED NOT NULL,
+  `unitId` bigint(20) UNSIGNED DEFAULT NULL,
+  `brewId` bigint(20) UNSIGNED NOT NULL,
+  `userId` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `fermentationtype`;
+CREATE TABLE `fermentationtype` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ingredient`;
+CREATE TABLE `ingredient` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `supplier` varchar(30) DEFAULT NULL,
+  `quantity` float NOT NULL DEFAULT '0',
+  `unitId` bigint(20) UNSIGNED NOT NULL,
+  `lowValue` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `keg`;
+CREATE TABLE `keg` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `serialNum` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `kegorder`;
+CREATE TABLE `kegorder` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `pickupDate` datetime DEFAULT NULL,
+  `returnDate` datetime DEFAULT NULL,
+  `customerId` bigint(20) UNSIGNED DEFAULT NULL,
+  `brewId` bigint(20) UNSIGNED DEFAULT NULL,
+  `userId` bigint(20) UNSIGNED DEFAULT NULL,
+  `returned` tinyint(1) NOT NULL DEFAULT '0',
+  `kegId` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `unit`;
+CREATE TABLE `unit` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `username` varchar(15) NOT NULL,
+  `password` varchar(256) NOT NULL,
+  `isAdmin` tinyint(1) NOT NULL DEFAULT '0',
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `passwordExpDate` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP VIEW IF EXISTS `usersafe`;
+CREATE TABLE `usersafe` (
+`id` bigint(20) unsigned
+,`username` varchar(15)
+,`isAdmin` tinyint(1)
+,`created` timestamp
+,`passwordExpDate` date
+);
+DROP TABLE IF EXISTS `usersafe`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`be1dbd64a86c89`@`%` SQL SECURITY DEFINER VIEW `usersafe`  AS  select `user`.`id` AS `id`,`user`.`username` AS `username`,`user`.`isAdmin` AS `isAdmin`,`user`.`created` AS `created`,`user`.`passwordExpDate` AS `passwordExpDate` from `user` ;
+
+
+ALTER TABLE `beer`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD KEY `createdBy` (`createdBy`),
+  ADD KEY `beerTypeId` (`beerTypeId`);
+
+ALTER TABLE `beertype`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+ALTER TABLE `beerusesingredient`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD KEY `beerusesingredient_ibfk_1` (`beerId`),
+  ADD KEY `beerusesingredient_ibfk_2` (`ingredientId`);
+
+ALTER TABLE `brew`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD KEY `beerId` (`beerId`),
+  ADD KEY `userId` (`userId`),
+  ADD KEY `brewStart` (`brewStart`),
+  ADD KEY `brewEnd` (`brewEnd`);
+
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
+
+ALTER TABLE `fermentation`
+  ADD PRIMARY KEY (`id`,`dateTime`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD KEY `typeId` (`typeId`),
+  ADD KEY `unitId` (`unitId`),
+  ADD KEY `brewId` (`brewId`),
+  ADD KEY `userId` (`userId`);
+
+ALTER TABLE `fermentationtype`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+ALTER TABLE `ingredient`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD KEY `unitId` (`unitId`);
+
+ALTER TABLE `keg`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
+
+ALTER TABLE `kegorder`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD KEY `kegId` (`kegId`),
+  ADD KEY `kegorder_ibfk_2` (`brewId`),
+  ADD KEY `kegorder_ibfk_1` (`customerId`),
+  ADD KEY `kegorder_ibfk_3` (`userId`);
+
+ALTER TABLE `unit`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+
+ALTER TABLE `beer`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=211;
+ALTER TABLE `beertype`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+ALTER TABLE `beerusesingredient`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
+ALTER TABLE `brew`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
+ALTER TABLE `customer`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+ALTER TABLE `fermentation`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=263;
+ALTER TABLE `fermentationtype`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+ALTER TABLE `ingredient`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+ALTER TABLE `keg`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+ALTER TABLE `kegorder`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+ALTER TABLE `unit`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+ALTER TABLE `user`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301;
+
+ALTER TABLE `beer`
+  ADD CONSTRAINT `beer_ibfk_1` FOREIGN KEY (`createdBy`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `beer_ibfk_2` FOREIGN KEY (`beerTypeId`) REFERENCES `beertype` (`id`);
+
+ALTER TABLE `beerusesingredient`
+  ADD CONSTRAINT `beerusesingredient_ibfk_1` FOREIGN KEY (`beerId`) REFERENCES `beer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `beerusesingredient_ibfk_2` FOREIGN KEY (`ingredientId`) REFERENCES `ingredient` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `brew`
+  ADD CONSTRAINT `brew_ibfk_1` FOREIGN KEY (`beerId`) REFERENCES `beer` (`id`),
+  ADD CONSTRAINT `brew_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `user` (`id`);
+
+ALTER TABLE `fermentation`
+  ADD CONSTRAINT `fermentation_ibfk_1` FOREIGN KEY (`typeId`) REFERENCES `fermentationtype` (`id`),
+  ADD CONSTRAINT `fermentation_ibfk_2` FOREIGN KEY (`unitId`) REFERENCES `unit` (`id`),
+  ADD CONSTRAINT `fermentation_ibfk_3` FOREIGN KEY (`brewId`) REFERENCES `brew` (`id`),
+  ADD CONSTRAINT `fermentation_ibfk_4` FOREIGN KEY (`userId`) REFERENCES `user` (`id`);
+
+ALTER TABLE `ingredient`
+  ADD CONSTRAINT `ingredient_ibfk_1` FOREIGN KEY (`unitId`) REFERENCES `unit` (`id`);
+
+ALTER TABLE `kegorder`
+  ADD CONSTRAINT `kegorder_ibfk_1` FOREIGN KEY (`customerId`) REFERENCES `customer` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
+  ADD CONSTRAINT `kegorder_ibfk_2` FOREIGN KEY (`brewId`) REFERENCES `brew` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
+  ADD CONSTRAINT `kegorder_ibfk_3` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
+  ADD CONSTRAINT `kegorder_ibfk_4` FOREIGN KEY (`kegId`) REFERENCES `keg` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+SET FOREIGN_KEY_CHECKS=1;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
